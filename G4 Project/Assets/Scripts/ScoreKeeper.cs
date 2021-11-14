@@ -27,12 +27,12 @@ public class ScoreKeeper : MonoBehaviour
             lives--;
             livesText.text = lives.ToString();
             col.gameObject.GetComponent<BallController>().ResetBall();
-        }
 
-        if (lives == 0)
-        {
-            col.gameObject.SetActive(false);
-            GameOverScreen.SetActive(true);
+            if (lives == 0)
+            {
+                col.gameObject.SetActive(false);
+                GameOverScreen.SetActive(true);
+            }
         }
     }
 }

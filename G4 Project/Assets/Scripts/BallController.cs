@@ -10,9 +10,13 @@ public class BallController : MonoBehaviour
 
     private Rigidbody2D rb;
 
+    [SerializeField]
+    private int ownerID;
+
     // Start is called before the first frame update
     void Start()
     {
+        ownerID = Random.Range(1, 2);
         rb = GetComponent<Rigidbody2D>();
         float randomDirection = Random.Range(0, 2) * 2 - 1;
         rb.AddForce(new Vector2(3 * randomDirection, 15 * randomDirection) * thrust, ForceMode2D.Force);
@@ -30,5 +34,14 @@ public class BallController : MonoBehaviour
         rb.velocity = Vector2.zero;
         float randomDirection = Random.Range(0, 2) * 2 - 1;
         rb.AddForce(new Vector2(3 * randomDirection, 15 * randomDirection) * thrust, ForceMode2D.Force);
+    }
+
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        if (col.gameObject.GetComponent<PaddleController>() != null)
+        {
+            PaddleController paddle = col.gameObject.GetComponent<PaddleController>();
+            ownerID = paddle.getOwnerID();
+        }
     }
 }

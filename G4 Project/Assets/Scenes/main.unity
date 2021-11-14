@@ -696,6 +696,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thrust: 50
+  ownerID: 0
 --- !u!50 &577972328
 Rigidbody2D:
   serializedVersion: 4
@@ -831,6 +832,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debugToggle: 0
+  ownerID: 1
 --- !u!1 &826857970
 GameObject:
   m_ObjectHideFlags: 0
@@ -1172,6 +1174,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debugToggle: 0
+  ownerID: 2
 --- !u!50 &1211466904
 Rigidbody2D:
   serializedVersion: 4

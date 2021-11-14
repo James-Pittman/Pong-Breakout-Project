@@ -10,7 +10,6 @@ public class BallController : MonoBehaviour
 
     private Rigidbody2D rb;
 
-    [SerializeField]
     private int ownerID;
 
     // Start is called before the first frame update

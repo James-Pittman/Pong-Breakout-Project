@@ -5,30 +5,32 @@ using UnityEngine.UI;
 
 public class ScoreKeeper : MonoBehaviour
 {
-    [SerializeField] private GameObject GameOverScreen;
-    [SerializeField] private Text scoreText;
-    private int score;
+    [SerializeField]
+    private GameObject GameOverScreen;
+
+    [SerializeField]
+    private Text livesText;
+
+    private int lives;
     
     // Start is called before the first frame update
     void Start()
     {
-        score = 0;
+        lives = 5;
+        livesText.text = lives.ToString();
     }
 
-    // Update is called once per frame
-    void Update()
+    void OnCollisionEnter2D(Collision2D col)
     {
-        
-    }
-
-    void OnCollisionEnter2D(Collision2D col){
-        if (col.gameObject.GetComponent<BallController>() != null){
-            score++;
-            scoreText.text = score.ToString();
+        if (col.gameObject.GetComponent<BallController>() != null)
+        {
+            lives--;
+            livesText.text = lives.ToString();
             col.gameObject.GetComponent<BallController>().ResetBall();
         }
 
-        if (score >= 7){
+        if (lives == 0)
+        {
             col.gameObject.SetActive(false);
             GameOverScreen.SetActive(true);
         }

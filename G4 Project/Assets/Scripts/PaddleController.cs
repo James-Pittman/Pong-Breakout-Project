@@ -4,31 +4,52 @@ using UnityEngine;
 
 public class PaddleController : MonoBehaviour
 {
-    private Rigidbody2D rigidBody;
 
-    // Start is called before the first frame update
-    void Start()
+    [HideInInspector]
+    public bool debugToggle = false;
+
+    private Rigidbody2D paddle;
+
+    private void Start()
     {
-        rigidBody = GetComponent<Rigidbody2D>();
+        paddle = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        movement();
+        Movement();
     }
 
-    private void movement(){
-        foreach (Touch touch in Input.touches){
-            Vector3 touchPos = Camera.main.ScreenToWorldPoint(touch.position);
-            Vector2 myPosition = gameObject.GetComponent<Rigidbody2D>().position;
-            if (Mathf.Abs(touchPos.x - myPosition.x) <= 2){
-
-
-                myPosition.y = Mathf.Lerp (myPosition.y, touchPos.y, 10);
-                myPosition.y = Mathf.Clamp(myPosition.y, -3.7f, 3.7f);
-                gameObject.GetComponent<Rigidbody2D>().position = myPosition;
+    // Touch movement for paddles
+    private void Movement()
+    {
+        // Check to see if debug PC mode is on.
+        if (debugToggle)
+        {
+            PCMovement();
+        }
+        // Touch movement
+        else
+        {
+            foreach (Touch touch in Input.touches)
+            {
+                Vector3 touchPos = Camera.main.ScreenToWorldPoint(touch.position);
+                Vector2 myPosition = paddle.position;
+                if (Mathf.Abs(touchPos.x - myPosition.x) <= 2)
+                {
+                    myPosition.y = Mathf.Lerp(myPosition.y, touchPos.y, 12f);
+                    myPosition.y = Mathf.Clamp(myPosition.y, -3.7f, 3.7f);
+                    paddle.position = myPosition;
+                }
             }
         }
+    }
+
+    // PC movement for debug
+    // Moves both paddles
+    private void PCMovement()
+    {
+        float direction = Input.GetAxis("Vertical");
+        paddle.position = new Vector2(paddle.position.x, Mathf.Clamp(paddle.position.y + (direction / 20), -3.7f, 3.7f));
     }
 }

@@ -5,7 +5,9 @@ using UnityEngine;
 public class BallController : MonoBehaviour
 {
 
-    [SerializeField] private int thrust;
+    [SerializeField]
+    private int thrust;
+
     private Rigidbody2D rb;
 
     // Start is called before the first frame update
@@ -22,7 +24,8 @@ public class BallController : MonoBehaviour
         
     }
 
-    public void ResetBall(){
+    public void ResetBall()
+    {
         transform.position = Vector2.zero;
         rb.velocity = Vector2.zero;
         float randomDirection = Random.Range(0, 2) * 2 - 1;

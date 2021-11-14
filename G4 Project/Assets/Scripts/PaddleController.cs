@@ -10,6 +10,14 @@ public class PaddleController : MonoBehaviour
 
     private Rigidbody2D paddle;
 
+    [SerializeField]
+    private int ownerID;
+
+    public int getOwnerID()
+    {
+        return ownerID;
+    }
+
     private void Start()
     {
         paddle = GetComponent<Rigidbody2D>();

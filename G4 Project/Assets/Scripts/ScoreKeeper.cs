@@ -31,6 +31,25 @@ public class ScoreKeeper : MonoBehaviour
 
         if (lives == 0)
         {
+            // Below is the code I used to test the leaderboard.
+            // It can be removed at any time, but I am leaving it here for
+            // now in case it is useful in the future.
+
+            // Leaderboard leaderboard = Leaderboard.LoadRecords();
+
+            // List<Record> recordList = leaderboard.getTopRecords();
+            // for (int i = 0; i < recordList.Count; i++)
+            // {
+            //     Debug.Log(recordList[i].score);
+            // }
+
+            // if (leaderboard.isTopRecord(1))
+            // {
+            //     Record newRecord = new Record(1, "testName");
+            //     leaderboard.addRecord(newRecord);
+            //     leaderboard.SaveRecords();
+            // }
+
             col.gameObject.SetActive(false);
             GameOverScreen.SetActive(true);
         }

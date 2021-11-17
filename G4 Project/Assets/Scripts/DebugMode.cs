@@ -37,7 +37,7 @@ public class DebugMode : MonoBehaviour
         // Restart the game
         if (GUI.Button(new Rect(20, 70, 80, 20), "Restart"))
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            gameObject.GetComponent<GameCoordinator>().RestartGame();
         }
     }
 }

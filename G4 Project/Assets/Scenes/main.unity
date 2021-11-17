@@ -305,6 +305,7 @@ GameObject:
   - component: {fileID: 211918796}
   - component: {fileID: 211918795}
   - component: {fileID: 211918798}
+  - component: {fileID: 211918799}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -389,6 +390,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b466c53fa26799549998925f7c072408, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &211918799
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 211918794}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f3b64841ef2bc04dbe86726f5f4b288, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  difficulty: 0
 --- !u!1 &226968703
 GameObject:
   m_ObjectHideFlags: 0
@@ -696,7 +710,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thrust: 50
-  ownerID: 0
 --- !u!50 &577972328
 Rigidbody2D:
   serializedVersion: 4
@@ -1824,7 +1837,6 @@ GameObject:
   - component: {fileID: 2075479617}
   - component: {fileID: 2075479620}
   - component: {fileID: 2075479619}
-  - component: {fileID: 2075479618}
   m_Layer: 5
   m_Name: GameOverScreen
   m_TagString: Untagged
@@ -1852,18 +1864,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2075479618
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2075479616}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8d97fe2dcc8729488272a6dad1a9973, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &2075479619
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2130,9 +2130,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2075479618}
-        m_TargetAssemblyTypeName: RestartGame, Assembly-CSharp
-        m_MethodName: RestartTheGame
+      - m_Target: {fileID: 211918799}
+        m_TargetAssemblyTypeName: GameCoordinator, Assembly-CSharp
+        m_MethodName: RestartGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

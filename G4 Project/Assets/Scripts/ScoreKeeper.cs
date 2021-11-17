@@ -27,6 +27,7 @@ public class ScoreKeeper : MonoBehaviour
             lives--;
             livesText.text = lives.ToString();
             col.gameObject.GetComponent<BallController>().ResetBall();
+        }
 
         if (lives == 0)
         {

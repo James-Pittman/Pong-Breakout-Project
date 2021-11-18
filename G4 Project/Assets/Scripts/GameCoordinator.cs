@@ -7,31 +7,49 @@ using UnityEngine.SceneManagement;
 // while the game is running.
 public class GameCoordinator : MonoBehaviour
 {
-    // List of all active balls in the scene.
-    private List<BallController> activeBalls = new List<BallController>();
-
     // Array of Players
-    private PaddleController[] players = new PaddleController[2];
+    private PaddleController[] players;
+
+    // All Prefabs
+    public GameObject ballPrefab;
+
+    // References to other objects/scripts.
+    private ScoreKeeper[] scoreKeepers;
+    public List<GameObject> activeBalls = new List<GameObject>();
 
     // Difficulty
     public int difficulty;
 
-    // Start is called before the first frame update
+    // Ball Thrust Value
+    public int ballThrust;
+
+    // Bool to track if the game is currently running
+    public bool gameActive = false;
+
+    // Initialize all object references as needed.
     void Start()
     {
-        
+        players = FindObjectsOfType<PaddleController>();
+        scoreKeepers = FindObjectsOfType<ScoreKeeper>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (gameActive)
+        {
+            if (activeBalls.Count == 0)
+            {
+                GenerateBall(2);
+            }
+        }
     }
 
     // Does all required actions for the game to properly start
-    void OnGameStart()
+    public void OnGameStart()
     {
-
+        GenerateBall(2);
+        gameActive = true;
     }
 
     // Restarts the game
@@ -39,5 +57,47 @@ public class GameCoordinator : MonoBehaviour
     {
         // Need to redo this to make it better.
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+
+        /* WIP
+        foreach (ScoreKeeper sk in scoreKeepers)
+        {
+            sk.StartGame();
+        }
+        */
+    }
+
+    // Game Over
+    public void GameOver()
+    {
+        gameActive = false;
+        foreach (GameObject ball in activeBalls)
+        {
+            Destroy(ball);
+        }
+        activeBalls.Clear();
+    }
+
+    public void GenerateBall(int ownerID)
+    {
+        GameObject newBall = Instantiate(ballPrefab);
+        activeBalls.Add(newBall);
+        BallController newBallStats = newBall.GetComponent<BallController>();
+
+        newBallStats.ownerID = ownerID;
+        newBallStats.thrust = ballThrust;
+
+        // Randomly choose which side to send the ball to
+        if (Random.value < 0.5f)
+        {
+            newBallStats.xForce = Mathf.Cos(Random.Range(2.094f, 4.189f));
+            newBallStats.yForce = Mathf.Sin(Random.Range(2.094f, 4.189f));
+        }
+        else
+        {
+            newBallStats.xForce = Mathf.Cos(Random.Range(5.236f, 7.329f));
+            newBallStats.yForce = Mathf.Sin(Random.Range(5.236f, 7.329f));
+        }
+
+        newBallStats.ApplyForce();
     }
 }

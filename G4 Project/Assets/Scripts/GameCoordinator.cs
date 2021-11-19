@@ -77,8 +77,12 @@ public class GameCoordinator : MonoBehaviour
         activeBalls.Clear();
     }
 
+    // Generate a new ball. If ownerID = 0, the ball is generated in front of player 1.
+    // If ownerID = 1, it is generated in front of player 2. If ownerID = 2, then the ball
+    // generates in the middle.
     public void GenerateBall(int ownerID)
     {
+        Debug.Log("Generating a new ball with OwnerID " + ownerID);
         GameObject newBall = Instantiate(ballPrefab);
         activeBalls.Add(newBall);
         BallController newBallStats = newBall.GetComponent<BallController>();
@@ -86,9 +90,31 @@ public class GameCoordinator : MonoBehaviour
         newBallStats.ownerID = ownerID;
         newBallStats.thrust = ballThrust;
 
-        // Randomly choose which side to send the ball to
+        // Determine the x-coordinate where the ball is spawned (ballSpawnX)
+        // and which direction the ball will move.
+        int ballSpawnX;
+        bool movesLeft;
+        if (ownerID == 0)
+        {
+            ballSpawnX = -6;
+            movesLeft = false;
+        }
+        else if (ownerID == 1)
+        {
+            ballSpawnX = 6;
+            movesLeft = true;
+        }
+        else
+        {
+            ballSpawnX = 0;
+            movesLeft = (Random.value < 0.5f)? true : false;
+        }
+
+        newBall.transform.position = new Vector2(ballSpawnX, 0);
+
+        // Determine angle that the ball will move.
         float randomAngle;
-        if (Random.value < 0.5f)
+        if (movesLeft)
         {
             // Random angle between 2/3*pi and 4/3*pi
             randomAngle = Random.Range(2.094f, 4.189f);

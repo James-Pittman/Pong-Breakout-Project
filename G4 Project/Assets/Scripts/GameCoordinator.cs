@@ -87,16 +87,20 @@ public class GameCoordinator : MonoBehaviour
         newBallStats.thrust = ballThrust;
 
         // Randomly choose which side to send the ball to
+        float randomAngle;
         if (Random.value < 0.5f)
         {
-            newBallStats.xForce = Mathf.Cos(Random.Range(2.094f, 4.189f));
-            newBallStats.yForce = Mathf.Sin(Random.Range(2.094f, 4.189f));
+            // Random angle between 2/3*pi and 4/3*pi
+            randomAngle = Random.Range(2.094f, 4.189f);
         }
         else
         {
-            newBallStats.xForce = Mathf.Cos(Random.Range(5.236f, 7.329f));
-            newBallStats.yForce = Mathf.Sin(Random.Range(5.236f, 7.329f));
+            // Random angle between 5/3*pi and 7/3*pi
+            randomAngle = Random.Range(5.236f, 7.329f);
         }
+
+        newBallStats.xForce = Mathf.Cos(randomAngle);
+        newBallStats.yForce = Mathf.Sin(randomAngle);
 
         newBallStats.ApplyForce();
     }

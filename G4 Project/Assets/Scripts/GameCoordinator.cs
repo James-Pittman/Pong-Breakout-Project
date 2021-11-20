@@ -82,7 +82,6 @@ public class GameCoordinator : MonoBehaviour
     // generates in the middle.
     public void GenerateBall(int ownerID)
     {
-        Debug.Log("Generating a new ball with OwnerID " + ownerID);
         GameObject newBall = Instantiate(ballPrefab);
         activeBalls.Add(newBall);
         BallController newBallStats = newBall.GetComponent<BallController>();

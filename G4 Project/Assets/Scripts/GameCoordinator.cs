@@ -40,7 +40,7 @@ public class GameCoordinator : MonoBehaviour
         {
             if (activeBalls.Count == 0)
             {
-                GenerateBall(2);
+                GenerateBall(0);
             }
         }
     }
@@ -48,7 +48,7 @@ public class GameCoordinator : MonoBehaviour
     // Does all required actions for the game to properly start
     public void OnGameStart()
     {
-        GenerateBall(2);
+        GenerateBall(0);
         gameActive = true;
     }
 
@@ -82,7 +82,6 @@ public class GameCoordinator : MonoBehaviour
     // generates in the middle.
     public void GenerateBall(int ownerID)
     {
-        Debug.Log("Generating a new ball with OwnerID " + ownerID);
         GameObject newBall = Instantiate(ballPrefab);
         activeBalls.Add(newBall);
         BallController newBallStats = newBall.GetComponent<BallController>();

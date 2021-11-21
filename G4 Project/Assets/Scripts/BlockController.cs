@@ -10,17 +10,42 @@ public class BlockController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        UpdateColor();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        Destroy(gameObject);
+        health--;
+        UpdateColor();
+
+        if (health <= 0)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    void UpdateColor()
+    {
+        GameObject child = gameObject.transform.GetChild(0).gameObject;
+        Material mat = child.GetComponent<SpriteRenderer>().material;
+
+        if (health == 1)
+        {
+            mat.color = Color.red;
+        }
+        else if (health == 2)
+        {
+            mat.color = Color.yellow;
+        }
+        else if (health == 3)
+        {
+            mat.color = Color.green;
+        }
     }
 }

@@ -7,9 +7,12 @@ public class BlockController : MonoBehaviour
     [SerializeField]
     private int health;
 
+    private GameCoordinator coordinator;
+
     // Start is called before the first frame update
     void Start()
     {
+        coordinator = FindObjectOfType<GameCoordinator>();
         UpdateColor();
     }
 
@@ -26,6 +29,7 @@ public class BlockController : MonoBehaviour
 
         if (health <= 0)
         {
+            coordinator.OnBlockDelete();
             Destroy(gameObject);
         }
     }

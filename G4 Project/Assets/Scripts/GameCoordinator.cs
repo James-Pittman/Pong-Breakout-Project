@@ -12,6 +12,7 @@ public class GameCoordinator : MonoBehaviour
 
     // All Prefabs
     public GameObject ballPrefab;
+    public GameObject blockSet1;
 
     // References to other objects/scripts.
     private ScoreKeeper[] scoreKeepers;
@@ -26,11 +27,15 @@ public class GameCoordinator : MonoBehaviour
     // Bool to track if the game is currently running
     public bool gameActive = false;
 
+    // Number of blocks remaining on the screen
+    public int blocksRemaining;
+
     // Initialize all object references as needed.
     void Start()
     {
         players = FindObjectsOfType<PaddleController>();
         scoreKeepers = FindObjectsOfType<ScoreKeeper>();
+        RespawnBlocks();
     }
 
     // Update is called once per frame
@@ -128,5 +133,24 @@ public class GameCoordinator : MonoBehaviour
         newBallStats.yForce = Mathf.Sin(randomAngle);
 
         newBallStats.ApplyForce();
+    }
+
+    public void OnBlockDelete()
+    {
+        blocksRemaining--;
+        if (blocksRemaining <= 0)
+        {
+            RespawnBlocks();
+        }
+    }
+
+    public void RespawnBlocks()
+    {
+        // Eventually will add other block prefabs; for now this is the only one.
+        if (true)
+        {
+            GameObject blockArray = Instantiate(blockSet1);
+            blocksRemaining = 90;
+        }
     }
 }

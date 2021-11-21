@@ -14,6 +14,8 @@ public class GameCoordinator : MonoBehaviour
     public GameObject ballPrefab;
     public GameObject blockSet1;
 
+    private GameObject currentBlocks;
+
     // References to other objects/scripts.
     private ScoreKeeper[] scoreKeepers;
     public List<GameObject> activeBalls = new List<GameObject>();
@@ -138,7 +140,7 @@ public class GameCoordinator : MonoBehaviour
     public void OnBlockDelete()
     {
         blocksRemaining--;
-        if (blocksRemaining <= 0)
+        if (blocksRemaining <= 20)
         {
             RespawnBlocks();
         }
@@ -146,10 +148,12 @@ public class GameCoordinator : MonoBehaviour
 
     public void RespawnBlocks()
     {
+        Destroy(currentBlocks);
+        
         // Eventually will add other block prefabs; for now this is the only one.
         if (true)
         {
-            GameObject blockArray = Instantiate(blockSet1);
+            currentBlocks = Instantiate(blockSet1);
             blocksRemaining = 90;
         }
     }

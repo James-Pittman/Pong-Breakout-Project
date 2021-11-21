@@ -37,15 +37,36 @@ public class BlockController : MonoBehaviour
 
         if (health == 1)
         {
-            mat.color = Color.red;
+            mat.color = new Color(240f/255, 60f/255, 60f/255, 1);
         }
         else if (health == 2)
         {
-            mat.color = Color.yellow;
+            //mat.color = new Color(230, 130, 0, 1);
+            mat.color = new Color(240f/255, 160f/255, 30f/255, 1);
         }
         else if (health == 3)
         {
-            mat.color = Color.green;
+            mat.color = new Color(230f/255, 230f/255, 0, 1);
+        }
+        else if (health == 4)
+        {
+            mat.color = new Color(60f/255, 240f/255, 70f/255, 1);
+        }
+        else if (health == 5)
+        {
+            mat.color = new Color(60f/255, 240f/255, 190f/255, 1);
+        }
+        else if (health == 6)
+        {
+            mat.color = new Color(110f/255, 170f/255, 240f/255, 1);
+        }
+        else if (health == 7)
+        {
+            mat.color = new Color(160f/255, 100f/255, 240f/255, 1);
+        }
+        else if (health == 8)
+        {
+            mat.color = new Color(240f/255, 110f/255, 230f/255, 1);
         }
     }
 }

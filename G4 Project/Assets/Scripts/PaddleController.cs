@@ -4,20 +4,29 @@ using UnityEngine;
 
 public class PaddleController : MonoBehaviour
 {
+    // Caches for gameObjects/Components
+    private Rigidbody2D paddle;
 
+    // Debug toggle to control movement options.
     [HideInInspector]
     public bool debugToggle = false;
 
-    [SerializeField]
+    // The ID of this player/paddle.
     public int ownerID;
 
-    private Rigidbody2D paddle;
+    // Returns the ownerID of this paddle.
+    public int getOwnerID()
+    {
+        return ownerID;
+    }
 
+    // Initialize caches.
     private void Start()
     {
         paddle = GetComponent<Rigidbody2D>();
     }
 
+    // Update the movement every frame.
     private void Update()
     {
         Movement();
@@ -58,10 +67,5 @@ public class PaddleController : MonoBehaviour
                 paddle.position = myPosition;
             }
         }
-    }
-
-    public int getOwnerID()
-    {
-        return ownerID;
     }
 }

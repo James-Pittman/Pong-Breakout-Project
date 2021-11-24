@@ -7,22 +7,21 @@ using UnityEngine.SceneManagement;
 // while the game is running.
 public class GameCoordinator : MonoBehaviour
 {
-    // Array of Players
-    private PaddleController[] players;
-
     // All Prefabs
     public GameObject ballPrefab;
     public GameObject blockSetPrefab;
-
     private GameObject blockSet;
 
     // References to other objects/scripts.
-    private ScoreKeeper[] scoreKeepers;
     public List<GameObject> activeBalls = new List<GameObject>();
     public List<GameObject> activeBallsP1 = new List<GameObject>();
     public List<GameObject> activeBallsP2 = new List<GameObject>();
     public List<GameObject> activeBlocks = new List<GameObject>();
     public List<GameObject> inactiveBlocks = new List<GameObject>();
+
+    // Array of Players and score areas.
+    private PaddleController[] players;
+    private ScoreKeeper[] scoreKeepers;
 
     // Difficulty
     public int difficulty;
@@ -39,36 +38,6 @@ public class GameCoordinator : MonoBehaviour
     // Bool to track if the game is currently running
     [HideInInspector]
     public bool gameActive = false;
-
-    // Number of blocks remaining on the screen
-    public int blocksRemaining;
-
-    // Initialize all object references as needed.
-    void Start()
-    {
-        players = FindObjectsOfType<PaddleController>();
-        scoreKeepers = FindObjectsOfType<ScoreKeeper>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (gameActive)
-        {
-            if (activeBallsP1.Count == 0)
-            {
-                GenerateBall(0);
-            }
-            if (activeBallsP2.Count == 0)
-            {
-                GenerateBall(1);
-            }
-            if (activeBlocks.Count < 30)
-            {
-                RespawnBlocks();
-            }
-        }
-    }
 
     // Does all required actions for the game to properly start
     public void OnGameStart()
@@ -112,8 +81,10 @@ public class GameCoordinator : MonoBehaviour
     // If ownerID = 1, it is generated in front of player 2.
     public void GenerateBall(int ownerID)
     {
+        // Instantiate the new ball.
         GameObject newBall = Instantiate(ballPrefab);
 
+        // Update ball lists accordingly.
         activeBalls.Add(newBall);
         if (ownerID == 0)
         {
@@ -124,8 +95,8 @@ public class GameCoordinator : MonoBehaviour
             activeBallsP2.Add(newBall);
         }
 
+        // Assign ownerID and thrust to the new ball.
         BallController newBallStats = newBall.GetComponent<BallController>();
-
         newBallStats.ownerID = ownerID;
         newBallStats.thrust = ballThrust;
 
@@ -148,7 +119,6 @@ public class GameCoordinator : MonoBehaviour
             ballSpawnX = 0;
             movesLeft = (Random.value < 0.5f) ? true : false;
         }
-
         newBall.transform.position = new Vector2(ballSpawnX, 0);
 
         // Determine angle that the ball will move.
@@ -164,13 +134,13 @@ public class GameCoordinator : MonoBehaviour
             randomAngle = Random.Range(5.236f, 7.329f);
         }
 
+        // Assign x and y forces and apply force to the ball.
         newBallStats.xForce = Mathf.Cos(randomAngle);
         newBallStats.yForce = Mathf.Sin(randomAngle);
-
         newBallStats.ApplyForce();
     }
 
-
+    // Generates the set of blocks at the start of the game.
     public void GenerateBlocks()
     {
         blockSet = Instantiate(blockSetPrefab);
@@ -181,6 +151,7 @@ public class GameCoordinator : MonoBehaviour
         }
     }
 
+    // Respawns a random block from the block set.
     public void RespawnBlocks()
     {
         // Select a random block from the list of inactive blocks.
@@ -190,5 +161,32 @@ public class GameCoordinator : MonoBehaviour
         inactiveBlocks[randomIndex].GetComponent<BlockController>().ActivateBlock();
         activeBlocks.Add(inactiveBlocks[randomIndex]);
         inactiveBlocks.RemoveAt(randomIndex);
+    }
+
+    // Initialize all object references as needed.
+    private void Start()
+    {
+        players = FindObjectsOfType<PaddleController>();
+        scoreKeepers = FindObjectsOfType<ScoreKeeper>();
+    }
+
+    // Update is called once per frame
+    private void Update()
+    {
+        if (gameActive)
+        {
+            if (activeBallsP1.Count == 0)
+            {
+                GenerateBall(0);
+            }
+            if (activeBallsP2.Count == 0)
+            {
+                GenerateBall(1);
+            }
+            if (activeBlocks.Count < 30)
+            {
+                RespawnBlocks();
+            }
+        }
     }
 }

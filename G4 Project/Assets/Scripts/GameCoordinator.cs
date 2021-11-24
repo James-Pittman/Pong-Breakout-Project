@@ -97,6 +97,8 @@ public class GameCoordinator : MonoBehaviour
     public void GameOver()
     {
         gameActive = false;
+
+        // Clear all balls from the scene.
         foreach (GameObject ball in activeBalls)
         {
             Destroy(ball);
@@ -107,8 +109,7 @@ public class GameCoordinator : MonoBehaviour
     }
 
     // Generate a new ball. If ownerID = 0, the ball is generated in front of player 1.
-    // If ownerID = 1, it is generated in front of player 2. If ownerID = 2, then the ball
-    // generates in the middle.
+    // If ownerID = 1, it is generated in front of player 2.
     public void GenerateBall(int ownerID)
     {
         GameObject newBall = Instantiate(ballPrefab);

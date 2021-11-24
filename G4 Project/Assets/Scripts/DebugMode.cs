@@ -52,7 +52,8 @@ public class DebugMode : MonoBehaviour
         // Spawn a new ball in center of screen
         if (GUI.Button(new Rect(20, 100, 100, 20), "Spawn Ball"))
         {
-            coordinator.GenerateBall(2);
+            float ownerId = Random.value;
+            coordinator.GenerateBall(Mathf.RoundToInt(ownerId));
         }
 
         // Enable Infinite lives

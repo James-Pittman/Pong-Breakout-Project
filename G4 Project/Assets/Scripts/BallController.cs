@@ -36,7 +36,7 @@ public class BallController : MonoBehaviour
         if (col.gameObject.GetComponent<PaddleController>() != null)
         {
             PaddleController paddle = col.gameObject.GetComponent<PaddleController>();
-            ownerID = paddle.getOwnerID();
+            ownerID = paddle.GetOwnerID();
         }
     }
 }

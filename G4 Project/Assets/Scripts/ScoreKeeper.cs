@@ -57,7 +57,10 @@ public class ScoreKeeper : MonoBehaviour
             {
                 coordinator.activeBallsP2.Remove(col.gameObject);
             }
-            
+
+            // Add points for losing a life to the other player's score.
+            AddLostLifePoints();
+
             Destroy(col.gameObject);
         }
 
@@ -83,24 +86,8 @@ public class ScoreKeeper : MonoBehaviour
             // }
 
 
-            coordinator.GameOver();
-            coordinator.gameActive = false;
-            col.gameObject.SetActive(false);
-            GameOverScreen.SetActive(true);
+            EndGame();
         }
-    }
-
-    // This function adds points to the player's score.
-    // If adding the points causes integer overflow, the game
-    // should terminate.
-    private void AddScore(int points)
-    {
-        if (score + points < 0)
-        {
-            // Stop game somehow
-        }
-
-        score += points;
     }
 
     // This method adds points whenever the player's ball hits a block.
@@ -115,6 +102,14 @@ public class ScoreKeeper : MonoBehaviour
         AddScore(500);
     }
 
+    // This method gives points to the OTHER player's score when the
+    // current player loses a life.
+    public void AddLostLifePoints()
+    {
+        ScoreKeeper keeper = coordinator.GetScoreKeeper(1 - ownerID);
+        keeper.AddScore(1000);
+    }
+
     public int getOwnerID()
     {
         return ownerID;
@@ -124,5 +119,29 @@ public class ScoreKeeper : MonoBehaviour
     {
         lives = 5;
         livesText.text = lives.ToString();
+    }
+
+    // This function adds points to the player's score.
+    // If adding the points causes integer overflow, the game
+    // should terminate.
+    private void AddScore(int points)
+    {
+        if (score + points < 0)
+        {
+            EndGame();
+        }
+        else
+        {
+            score += points;
+            scoreText.text = "Score: " + score.ToString();
+        }
+    }
+
+    private void EndGame()
+    {
+        coordinator.GameOver();
+        coordinator.gameActive = false;
+        //col.gameObject.SetActive(false);
+        GameOverScreen.SetActive(true);
     }
 }

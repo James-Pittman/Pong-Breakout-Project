@@ -164,6 +164,18 @@ public class GameCoordinator : MonoBehaviour
         inactiveBlocks.RemoveAt(randomIndex);
     }
 
+    public ScoreKeeper GetScoreKeeper(int ownerID)
+    {
+        if (ownerID == 1 || ownerID == 2)
+        {
+            return scoreKeepers[ownerID];
+        }
+        else
+        {
+            return null;
+        }
+    }
+
     // Initialize all object references as needed.
     private void Start()
     {

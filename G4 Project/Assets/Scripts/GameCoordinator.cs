@@ -166,7 +166,7 @@ public class GameCoordinator : MonoBehaviour
 
     public ScoreKeeper GetScoreKeeper(int ownerID)
     {
-        if (ownerID == 1 || ownerID == 2)
+        if (ownerID == 0 || ownerID == 1)
         {
             return scoreKeepers[ownerID];
         }

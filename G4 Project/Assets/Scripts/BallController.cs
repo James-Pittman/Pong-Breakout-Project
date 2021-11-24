@@ -4,34 +4,34 @@ using UnityEngine;
 
 public class BallController : MonoBehaviour
 {
+    // Caches for gameObjects/Components
     private Rigidbody2D rb;
     private GameCoordinator coordinator;
 
-    [HideInInspector]
-    public int ownerID, thrust, origenID;
+    // Id of the current balls owner (player).
+    public int ownerID;
 
-    [HideInInspector]
+    // Thrust applied to the ball.
+    public int thrust;
+
+    // Vector forces of ball.
     public float xForce, yForce;
 
-    // Start is called before the first frame update
-    void Awake()
-    {
-        rb = GetComponent<Rigidbody2D>();
-        coordinator = FindObjectOfType<GameCoordinator>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    // Apply a force to the ball based on the balls xForce and yForce.
     public void ApplyForce()
     {
         rb.AddForce(new Vector2(xForce, yForce) * thrust, ForceMode2D.Force);
     }
 
-    void OnCollisionEnter2D(Collision2D col)
+    // Start is called before the first frame update
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+        coordinator = FindObjectOfType<GameCoordinator>();
+    }
+
+    // If the ball hit's a paddle, update the balls ownerID.
+    private void OnCollisionEnter2D(Collision2D col)
     {
         if (col.gameObject.GetComponent<PaddleController>() != null)
         {

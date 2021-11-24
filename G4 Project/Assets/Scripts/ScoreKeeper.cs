@@ -38,24 +38,26 @@ public class ScoreKeeper : MonoBehaviour
 
     }
 
-    void OnCollisionEnter2D(Collision2D col)
+    void OnTriggerEnter2D(Collider2D col)
     {
         if (col.gameObject.GetComponent<BallController>() != null)
         {
             if (!debugToggle)
                 lives--;
             livesText.text = lives.ToString();
-            //col.gameObject.GetComponent<BallController>().ResetBall();
 
+            int ownerID = col.gameObject.GetComponent<BallController>().ownerID;
+            
             coordinator.activeBalls.Remove(col.gameObject);
-            if (col.gameObject.GetComponent<BallController>().origenID == 0)
+            if (ownerID == 0)
             {
-                ImportantData.p1Balls--;
+                coordinator.activeBallsP1.Remove(col.gameObject);
             }
-            else if (col.gameObject.GetComponent<BallController>().origenID == 1)
+            else if (ownerID == 1)
             {
-                ImportantData.p2Balls--;
+                coordinator.activeBallsP2.Remove(col.gameObject);
             }
+            
             Destroy(col.gameObject);
         }
 

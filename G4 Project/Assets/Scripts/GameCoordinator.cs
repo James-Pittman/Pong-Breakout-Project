@@ -17,7 +17,7 @@ public class GameCoordinator : MonoBehaviour
     private GameObject blockSet;
 
     // References to other objects/scripts.
-    private ScoreKeeper[] scoreKeepers;
+    public ScoreKeeper[] scoreKeepers;
     public List<GameObject> activeBalls = new List<GameObject>();
     public List<GameObject> activeBlocks = new List<GameObject>();
     public List<GameObject> inactiveBlocks = new List<GameObject>();

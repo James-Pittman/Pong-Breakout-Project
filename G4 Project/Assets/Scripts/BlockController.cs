@@ -32,6 +32,9 @@ public class BlockController : MonoBehaviour
     {
         health--;
 
+        int scorer = col.gameObject.GetComponent<BallController>().ownerID;
+        coordinator.scoreKeepers[scorer].AddBlockPoints();
+
         UpdateColor();
 
         if (health <= 0)

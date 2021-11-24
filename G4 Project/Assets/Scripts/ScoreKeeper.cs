@@ -99,6 +99,7 @@ public class ScoreKeeper : MonoBehaviour
         }
 
         score += points;
+        scoreText.text = "Score: " + score.ToString();
     }
 
     // This method adds points whenever the player's ball hits a block.

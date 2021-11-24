@@ -34,9 +34,15 @@ public class BlockController : MonoBehaviour
 
         // Find the owner whose ball hit the block and add points to their score.
         int scorer = col.gameObject.GetComponent<BallController>().ownerID;
-        ScoreKeeper keeper = coordinator.scoreKeepers[scorer];
+        
+        ScoreKeeper keeper= null;
+        if (scorer == 0 || scorer == 1)
+        {
+            keeper = coordinator.scoreKeepers[scorer];
 
-        keeper.AddBlockPoints();
+            // Add points for hitting a block.
+            keeper.AddBlockPoints();
+        }
 
         UpdateColor();
 
@@ -45,7 +51,12 @@ public class BlockController : MonoBehaviour
             if (powerFlag)
             {
                 selectPower(col.gameObject);
-                keeper.AddPowerUpPoints();
+                
+                // Add points for getting a power-up.
+                if (keeper != null)
+                {
+                    keeper.AddPowerUpPoints();
+                }
             }
 
             coordinator.activeBlocks.Remove(gameObject);

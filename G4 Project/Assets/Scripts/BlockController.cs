@@ -32,15 +32,21 @@ public class BlockController : MonoBehaviour
     {
         health--;
 
+        // Find the owner whose ball hit the block and add points to their score.
         int scorer = col.gameObject.GetComponent<BallController>().ownerID;
-        coordinator.scoreKeepers[scorer].AddBlockPoints();
+        ScoreKeeper keeper = coordinator.scoreKeepers[scorer];
+
+        keeper.AddBlockPoints();
 
         UpdateColor();
 
         if (health <= 0)
         {
             if (powerFlag)
+            {
                 selectPower(col.gameObject);
+                keeper.AddPowerUpPoints();
+            }
 
             coordinator.activeBlocks.Remove(gameObject);
             coordinator.inactiveBlocks.Add(gameObject);

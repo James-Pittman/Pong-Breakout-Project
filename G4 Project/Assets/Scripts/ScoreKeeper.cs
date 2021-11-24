@@ -46,7 +46,7 @@ public class ScoreKeeper : MonoBehaviour
                 lives--;
             livesText.text = lives.ToString();
 
-            int ownerID = col.gameObject.GetComponent<BallController>().ownerID;
+            int ownerID = col.gameObject.GetComponent<BallController>().originID;
             
             coordinator.activeBalls.Remove(col.gameObject);
             if (ownerID == 0)

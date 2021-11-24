@@ -53,7 +53,7 @@ public class GameCoordinator : MonoBehaviour
     {
         if (gameActive)
         {
-            if (activeBalls.Count == 0)
+            if (activeBalls.Count > 2)
             {
                 GenerateBall(0);
             }

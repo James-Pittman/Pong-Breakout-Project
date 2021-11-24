@@ -32,13 +32,13 @@ public class BlockController : MonoBehaviour
     {
         health--;
 
-        if (powerFlag)
-            selectPower(col.gameObject);
-
         UpdateColor();
 
         if (health <= 0)
         {
+            if (powerFlag)
+                selectPower(col.gameObject);
+
             coordinator.activeBlocks.Remove(gameObject);
             coordinator.inactiveBlocks.Add(gameObject);
             gameObject.SetActive(false);

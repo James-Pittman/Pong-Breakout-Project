@@ -72,8 +72,6 @@ public class GameCoordinator : MonoBehaviour
         {
             Destroy(ball);
         }
-        ImportantData.p1Balls = 0;
-        ImportantData.p2Balls = 0;
         activeBalls.Clear();
         activeBallsP1.Clear();
         activeBallsP2.Clear();
@@ -101,6 +99,7 @@ public class GameCoordinator : MonoBehaviour
         BallController newBallStats = newBall.GetComponent<BallController>();
         newBallStats.ownerID = ownerID;
         newBallStats.thrust = ballThrust;
+        newBallStats.originID = ownerID;
 
         // Determine the x-coordinate where the ball is spawned (ballSpawnX)
         // and which direction the ball will move.

@@ -9,7 +9,7 @@ public class BallController : MonoBehaviour
     private GameCoordinator coordinator;
 
     // Id of the current balls owner (player).
-    public int ownerID;
+    public int ownerID, originID;
 
     // Thrust applied to the ball.
     public int thrust;

@@ -18,6 +18,7 @@ public class BlockController : MonoBehaviour
         health = Random.Range(1, 8);
 
         gameObject.SetActive(true);
+
         UpdateColor();
     }
 

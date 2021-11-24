@@ -19,6 +19,8 @@ public class GameCoordinator : MonoBehaviour
     // References to other objects/scripts.
     private ScoreKeeper[] scoreKeepers;
     public List<GameObject> activeBalls = new List<GameObject>();
+    public List<GameObject> activeBallsP1 = new List<GameObject>();
+    public List<GameObject> activeBallsP2 = new List<GameObject>();
     public List<GameObject> activeBlocks = new List<GameObject>();
     public List<GameObject> inactiveBlocks = new List<GameObject>();
 
@@ -53,9 +55,13 @@ public class GameCoordinator : MonoBehaviour
     {
         if (gameActive)
         {
-            if (activeBalls.Count > 2)
+            if (activeBallsP1.Count == 0)
             {
                 GenerateBall(0);
+            }
+            if (activeBallsP2.Count == 0)
+            {
+                GenerateBall(1);
             }
             if (activeBlocks.Count < 30)
             {
@@ -96,6 +102,8 @@ public class GameCoordinator : MonoBehaviour
             Destroy(ball);
         }
         activeBalls.Clear();
+        activeBallsP1.Clear();
+        activeBallsP2.Clear();
     }
 
     // Generate a new ball. If ownerID = 0, the ball is generated in front of player 1.
@@ -104,7 +112,17 @@ public class GameCoordinator : MonoBehaviour
     public void GenerateBall(int ownerID)
     {
         GameObject newBall = Instantiate(ballPrefab);
+
         activeBalls.Add(newBall);
+        if (ownerID == 0)
+        {
+            activeBallsP1.Add(newBall);
+        }
+        else if (ownerID == 1)
+        {
+            activeBallsP2.Add(newBall);
+        }
+
         BallController newBallStats = newBall.GetComponent<BallController>();
 
         newBallStats.ownerID = ownerID;

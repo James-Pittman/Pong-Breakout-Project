@@ -9,7 +9,7 @@ public class PaddleController : MonoBehaviour
     public bool debugToggle = false;
 
     [SerializeField]
-    private int ownerID;
+    public int ownerID;
 
     private Rigidbody2D paddle;
 

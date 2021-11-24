@@ -31,6 +31,7 @@ public class BallController : MonoBehaviour
         rb.AddForce(new Vector2(xForce, yForce) * thrust, ForceMode2D.Force);
     }
 
+    // If the ball hit's a paddle, update the balls ownerID.
     void OnCollisionEnter2D(Collision2D col)
     {
         if (col.gameObject.GetComponent<PaddleController>() != null)

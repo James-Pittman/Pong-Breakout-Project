@@ -32,7 +32,7 @@ public class ScoreKeeper : MonoBehaviour
         livesText.text = lives.ToString();
     }
 
-    void OnCollisionEnter2D(Collision2D col)
+    void OnTriggerEnter2D(Collider2D col)
     {
         if (col.gameObject.GetComponent<BallController>() != null)
         {

@@ -15,11 +15,11 @@ public class ScoreKeeper : MonoBehaviour
 
     [SerializeField]
     private Text livesText;
-
     private int lives;
 
-    // TODO
-    public int score = 0;
+    [SerializeField]
+    private Text scoreText;
+    private int score = 0;
 
     public bool debugToggle = false;
     
@@ -30,6 +30,9 @@ public class ScoreKeeper : MonoBehaviour
 
         lives = 5;
         livesText.text = lives.ToString();
+
+        score = 0;
+
     }
 
     void OnCollisionEnter2D(Collision2D col)
@@ -72,6 +75,36 @@ public class ScoreKeeper : MonoBehaviour
             col.gameObject.SetActive(false);
             GameOverScreen.SetActive(true);
         }
+    }
+
+    // This function adds points to the player's score.
+    // If adding the points causes integer overflow, the game
+    // should terminate.
+    private void AddScore(int points)
+    {
+        if (score + points < 0)
+        {
+            // Stop game somehow
+        }
+
+        score += points;
+    }
+
+    // This method adds points whenever the player's ball hits a block.
+    public void AddBlockPoints()
+    {
+        AddScore(100);
+    }
+
+    // This method adds points whenever the player gains a power-up.
+    public void AddPowerUpPoints()
+    {
+        AddScore(500);
+    }
+
+    public int getOwnerID()
+    {
+        return ownerID;
     }
 
     public void StartGame()

@@ -56,6 +56,10 @@ public class ScoreKeeper : MonoBehaviour
             {
                 ImportantData.p2Balls--;
             }
+
+            // Add points for losing a life to the other player's score.
+            AddLostLifePoints();
+
             Destroy(col.gameObject);
         }
 
@@ -112,6 +116,14 @@ public class ScoreKeeper : MonoBehaviour
     public void AddPowerUpPoints()
     {
         AddScore(500);
+    }
+
+    // This method gives points to the OTHER player's score when the
+    // current player loses a life.
+    public void AddLostLifePoints()
+    {
+        ScoreKeeper keeper = coordinator.scoreKeepers[1 - ownerID];
+        keeper.AddScore(200);
     }
 
     public int getOwnerID()

@@ -92,20 +92,6 @@ public class ScoreKeeper : MonoBehaviour
         }
     }
 
-    // This function adds points to the player's score.
-    // If adding the points causes integer overflow, the game
-    // should terminate.
-    private void AddScore(int points)
-    {
-        if (score + points < 0)
-        {
-            // Stop game somehow
-        }
-
-        score += points;
-        scoreText.text = "Score: " + score.ToString();
-    }
-
     // This method adds points whenever the player's ball hits a block.
     public void AddBlockPoints()
     {
@@ -135,5 +121,19 @@ public class ScoreKeeper : MonoBehaviour
     {
         lives = 5;
         livesText.text = lives.ToString();
+    }
+
+    // This function adds points to the player's score.
+    // If adding the points causes integer overflow, the game
+    // should terminate.
+    private void AddScore(int points)
+    {
+        if (score + points < 0)
+        {
+            // Stop game somehow
+        }
+
+        score += points;
+        scoreText.text = "Score: " + score.ToString();
     }
 }

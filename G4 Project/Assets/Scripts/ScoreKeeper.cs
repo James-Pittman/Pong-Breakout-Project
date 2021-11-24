@@ -45,6 +45,14 @@ public class ScoreKeeper : MonoBehaviour
             //col.gameObject.GetComponent<BallController>().ResetBall();
 
             coordinator.activeBalls.Remove(col.gameObject);
+            if (col.gameObject.GetComponent<BallController>().origenID == 0)
+            {
+                ImportantData.p1Balls--;
+            }
+            else if (col.gameObject.GetComponent<BallController>().origenID == 1)
+            {
+                ImportantData.p2Balls--;
+            }
             Destroy(col.gameObject);
         }
 

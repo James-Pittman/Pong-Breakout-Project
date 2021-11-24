@@ -53,9 +53,13 @@ public class GameCoordinator : MonoBehaviour
     {
         if (gameActive)
         {
-            if (activeBalls.Count < 2)
+            if (ImportantData.p1Balls == 0)
             {
                 GenerateBall(0);
+            }
+            else if (ImportantData.p2Balls == 0)
+            {
+                GenerateBall(1);
             }
             if (activeBlocks.Count < 30)
             {
@@ -95,6 +99,8 @@ public class GameCoordinator : MonoBehaviour
         {
             Destroy(ball);
         }
+        ImportantData.p1Balls = 0;
+        ImportantData.p2Balls = 0;
         activeBalls.Clear();
     }
 
@@ -103,12 +109,19 @@ public class GameCoordinator : MonoBehaviour
     // generates in the middle.
     public void GenerateBall(int ownerID)
     {
+        if (ownerID == 0){
+            ImportantData.p1Balls++;
+        }
+        else{
+            ImportantData.p2Balls++;
+        }
         GameObject newBall = Instantiate(ballPrefab);
         activeBalls.Add(newBall);
         BallController newBallStats = newBall.GetComponent<BallController>();
 
         newBallStats.ownerID = ownerID;
         newBallStats.thrust = ballThrust;
+        newBallStats.origenID = ownerID;
 
         // Determine the x-coordinate where the ball is spawned (ballSpawnX)
         // and which direction the ball will move.

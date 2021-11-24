@@ -8,7 +8,7 @@ public class BallController : MonoBehaviour
     private GameCoordinator coordinator;
 
     [HideInInspector]
-    public int ownerID, thrust;
+    public int ownerID, thrust, origenID;
 
     [HideInInspector]
     public float xForce, yForce;

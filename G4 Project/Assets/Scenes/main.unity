@@ -1553,7 +1553,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GameOverScreen: {fileID: 2075479616}
-  ownerID: 0
+  ownerID: 1
   livesText: {fileID: 2091925446}
   scoreText: {fileID: 1404013533}
   debugToggle: 0

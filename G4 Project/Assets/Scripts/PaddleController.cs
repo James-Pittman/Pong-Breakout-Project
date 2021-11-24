@@ -59,4 +59,9 @@ public class PaddleController : MonoBehaviour
             }
         }
     }
+
+    public int GetOwnerID()
+    {
+        return ownerID;
+    }
 }

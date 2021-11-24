@@ -14,6 +14,9 @@ public class ScoreKeeper : MonoBehaviour
     private GameCoordinator coordinator;
 
     [SerializeField]
+    private int ownerID;
+
+    [SerializeField]
     private Text livesText;
     private int lives;
 

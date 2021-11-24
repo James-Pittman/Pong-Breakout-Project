@@ -101,7 +101,6 @@ public class GameCoordinator : MonoBehaviour
         BallController newBallStats = newBall.GetComponent<BallController>();
         newBallStats.ownerID = ownerID;
         newBallStats.thrust = ballThrust;
-        newBallStats.origenID = ownerID;
 
         // Determine the x-coordinate where the ball is spawned (ballSpawnX)
         // and which direction the ball will move.

@@ -15,7 +15,7 @@ public class PaddleController : MonoBehaviour
     public int ownerID;
 
     // Returns the ownerID of this paddle.
-    public int getOwnerID()
+    public int GetOwnerID()
     {
         return ownerID;
     }

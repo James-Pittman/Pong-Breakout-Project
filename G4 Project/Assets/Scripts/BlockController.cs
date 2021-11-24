@@ -19,6 +19,7 @@ public class BlockController : MonoBehaviour
 
         gameObject.SetActive(true);
 
+        UpdateStarVisibility();
         UpdateColor();
     }
 
@@ -104,6 +105,15 @@ public class BlockController : MonoBehaviour
         else if (health == 8)
         {
             mat.color = new Color(240f/255, 110f/255, 230f/255, 1);
+        }
+    }
+
+    private void UpdateStarVisibility()
+    {
+        if (powerFlag == true)
+        {
+            GameObject star = gameObject.transform.GetChild(2).gameObject;
+            star.GetComponent<SpriteRenderer>().sortingOrder = 2;
         }
     }
 

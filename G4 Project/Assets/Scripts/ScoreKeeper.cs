@@ -85,10 +85,7 @@ public class ScoreKeeper : MonoBehaviour
             // }
 
 
-            coordinator.GameOver();
-            coordinator.gameActive = false;
-            col.gameObject.SetActive(false);
-            GameOverScreen.SetActive(true);
+            EndGame();
         }
     }
 
@@ -109,7 +106,7 @@ public class ScoreKeeper : MonoBehaviour
     public void AddLostLifePoints()
     {
         ScoreKeeper keeper = coordinator.scoreKeepers[1 - ownerID];
-        keeper.AddScore(200);
+        keeper.AddScore(1000);
     }
 
     public int getOwnerID()
@@ -130,10 +127,20 @@ public class ScoreKeeper : MonoBehaviour
     {
         if (score + points < 0)
         {
-            // Stop game somehow
+            EndGame();
         }
+        else
+        {
+            score += points;
+            scoreText.text = "Score: " + score.ToString();
+        }
+    }
 
-        score += points;
-        scoreText.text = "Score: " + score.ToString();
+    private void EndGame()
+    {
+        coordinator.GameOver();
+        coordinator.gameActive = false;
+        //col.gameObject.SetActive(false);
+        GameOverScreen.SetActive(true);
     }
 }

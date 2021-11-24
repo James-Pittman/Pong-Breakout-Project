@@ -4,21 +4,20 @@ using UnityEngine;
 
 public class BallController : MonoBehaviour
 {
-
-    [SerializeField]
-    private int thrust;
-
     private Rigidbody2D rb;
+    private GameCoordinator coordinator;
 
-    private int ownerID;
+    [HideInInspector]
+    public int ownerID, thrust;
+
+    [HideInInspector]
+    public float xForce, yForce;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        ownerID = Random.Range(1, 2);
         rb = GetComponent<Rigidbody2D>();
-        float randomDirection = Random.Range(0, 2) * 2 - 1;
-        rb.AddForce(new Vector2(3 * randomDirection, 15 * randomDirection) * thrust, ForceMode2D.Force);
+        coordinator = FindObjectOfType<GameCoordinator>();
     }
 
     // Update is called once per frame
@@ -27,12 +26,9 @@ public class BallController : MonoBehaviour
         
     }
 
-    public void ResetBall()
+    public void ApplyForce()
     {
-        transform.position = Vector2.zero;
-        rb.velocity = Vector2.zero;
-        float randomDirection = Random.Range(0, 2) * 2 - 1;
-        rb.AddForce(new Vector2(3 * randomDirection, 15 * randomDirection) * thrust, ForceMode2D.Force);
+        rb.AddForce(new Vector2(xForce, yForce) * thrust, ForceMode2D.Force);
     }
 
     void OnCollisionEnter2D(Collision2D col)

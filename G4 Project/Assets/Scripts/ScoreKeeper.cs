@@ -3,19 +3,31 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
+// THIS SCRIPT NEEDS TO BE MERGED INTO GAME COORDINATOR.
+// CANNOT HAVE TWO OF THEM.
 public class ScoreKeeper : MonoBehaviour
 {
     [SerializeField]
     private GameObject GameOverScreen;
 
+    private GameCoordinator coordinator;
+
     [SerializeField]
     private Text livesText;
 
     private int lives;
+
+    // TODO
+    public int score = 0;
+
+    public bool debugToggle = false;
     
     // Start is called before the first frame update
     void Start()
     {
+        coordinator = FindObjectOfType<GameCoordinator>();
+
         lives = 5;
         livesText.text = lives.ToString();
     }
@@ -24,9 +36,13 @@ public class ScoreKeeper : MonoBehaviour
     {
         if (col.gameObject.GetComponent<BallController>() != null)
         {
-            lives--;
+            if (!debugToggle)
+                lives--;
             livesText.text = lives.ToString();
-            col.gameObject.GetComponent<BallController>().ResetBall();
+            //col.gameObject.GetComponent<BallController>().ResetBall();
+
+            coordinator.activeBalls.Remove(col.gameObject);
+            Destroy(col.gameObject);
         }
 
         if (lives == 0)
@@ -50,8 +66,17 @@ public class ScoreKeeper : MonoBehaviour
             //     leaderboard.SaveRecords();
             // }
 
+
+            coordinator.GameOver();
+            coordinator.gameActive = false;
             col.gameObject.SetActive(false);
             GameOverScreen.SetActive(true);
         }
+    }
+
+    public void StartGame()
+    {
+        lives = 5;
+        livesText.text = lives.ToString();
     }
 }

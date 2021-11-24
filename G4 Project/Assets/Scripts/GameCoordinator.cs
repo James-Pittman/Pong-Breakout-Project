@@ -12,13 +12,15 @@ public class GameCoordinator : MonoBehaviour
 
     // All Prefabs
     public GameObject ballPrefab;
-    public GameObject blockSet1;
+    public GameObject blockSetPrefab;
 
-    private GameObject currentBlocks;
+    private GameObject blockSet;
 
     // References to other objects/scripts.
     private ScoreKeeper[] scoreKeepers;
     public List<GameObject> activeBalls = new List<GameObject>();
+    public List<GameObject> activeBlocks = new List<GameObject>();
+    public List<GameObject> inactiveBlocks = new List<GameObject>();
 
     // Difficulty
     public int difficulty;
@@ -26,7 +28,14 @@ public class GameCoordinator : MonoBehaviour
     // Ball Thrust Value
     public int ballThrust;
 
+    // Determines what number of block must remain before blocks begin being respawned.
+    public int respawnThreshold = 30;
+
+    // Power-Up Frequency
+    public float powerUpRandomVal = 0.1f;
+
     // Bool to track if the game is currently running
+    [HideInInspector]
     public bool gameActive = false;
 
     // Number of blocks remaining on the screen
@@ -37,7 +46,6 @@ public class GameCoordinator : MonoBehaviour
     {
         players = FindObjectsOfType<PaddleController>();
         scoreKeepers = FindObjectsOfType<ScoreKeeper>();
-        RespawnBlocks();
     }
 
     // Update is called once per frame
@@ -49,13 +57,19 @@ public class GameCoordinator : MonoBehaviour
             {
                 GenerateBall(0);
             }
+            if (activeBlocks.Count < 30)
+            {
+                RespawnBlocks();
+            }
         }
     }
 
     // Does all required actions for the game to properly start
     public void OnGameStart()
     {
+        GenerateBlocks();
         GenerateBall(0);
+        GenerateBall(1);
         gameActive = true;
     }
 
@@ -113,7 +127,7 @@ public class GameCoordinator : MonoBehaviour
         else
         {
             ballSpawnX = 0;
-            movesLeft = (Random.value < 0.5f)? true : false;
+            movesLeft = (Random.value < 0.5f) ? true : false;
         }
 
         newBall.transform.position = new Vector2(ballSpawnX, 0);
@@ -137,24 +151,25 @@ public class GameCoordinator : MonoBehaviour
         newBallStats.ApplyForce();
     }
 
-    public void OnBlockDelete()
+
+    public void GenerateBlocks()
     {
-        blocksRemaining--;
-        if (blocksRemaining <= 20)
+        blockSet = Instantiate(blockSetPrefab);
+        foreach (Transform block in blockSet.transform)
         {
-            RespawnBlocks();
+            activeBlocks.Add(block.gameObject);
+            block.GetComponent<BlockController>().ActivateBlock();
         }
     }
 
     public void RespawnBlocks()
     {
-        Destroy(currentBlocks);
-        
-        // Eventually will add other block prefabs; for now this is the only one.
-        if (true)
-        {
-            currentBlocks = Instantiate(blockSet1);
-            blocksRemaining = 90;
-        }
+        // Select a random block from the list of inactive blocks.
+        int randomIndex = Random.Range(0, inactiveBlocks.Count - 1);
+
+        // Activate the selected block, and update lists accordingly.
+        inactiveBlocks[randomIndex].GetComponent<BlockController>().ActivateBlock();
+        activeBlocks.Add(inactiveBlocks[randomIndex]);
+        inactiveBlocks.RemoveAt(randomIndex);
     }
 }

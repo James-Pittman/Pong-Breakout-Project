@@ -4,37 +4,49 @@ using UnityEngine;
 
 public class BlockController : MonoBehaviour
 {
-    [SerializeField]
     private int health;
+
+    [HideInInspector]
+    public bool powerFlag = false;
 
     private GameCoordinator coordinator;
 
-    // Start is called before the first frame update
-    void Start()
+    public void ActivateBlock()
     {
-        coordinator = FindObjectOfType<GameCoordinator>();
+        powerFlag = (Random.value < coordinator.powerUpRandomVal) ? true : false;
+
+        health = Random.Range(1, 8);
+
+        gameObject.SetActive(true);
         UpdateColor();
     }
 
-    // Update is called once per frame
-    void Update()
+    // Start is called before the first frame update
+    private void Awake()
     {
-
+        coordinator = FindObjectOfType<GameCoordinator>();
+        gameObject.SetActive(false);
     }
 
     void OnCollisionEnter2D(Collision2D col)
     {
         health--;
+
+        if (powerFlag)
+            selectPower(col.gameObject);
+
         UpdateColor();
 
         if (health <= 0)
         {
-            coordinator.OnBlockDelete();
-            Destroy(gameObject);
+            coordinator.activeBlocks.Remove(gameObject);
+            coordinator.inactiveBlocks.Add(gameObject);
+            gameObject.SetActive(false);
         }
     }
 
-    void UpdateColor()
+    // Updates the color of the block to reflect the blocks health.
+    private void UpdateColor()
     {
         GameObject child = gameObject.transform.GetChild(0).gameObject;
         Material mat = child.GetComponent<SpriteRenderer>().material;
@@ -72,5 +84,10 @@ public class BlockController : MonoBehaviour
         {
             mat.color = new Color(240f/255, 110f/255, 230f/255, 1);
         }
+    }
+
+    private void selectPower(GameObject ball)
+    {
+        coordinator.GenerateBall(ball.GetComponent<BallController>().ownerID);
     }
 }

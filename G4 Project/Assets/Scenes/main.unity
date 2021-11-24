@@ -404,11 +404,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ballPrefab: {fileID: 871786936212859641, guid: 62c160160e55aeb4f8c10f9e08c04a66,
     type: 3}
-  blockSet1: {fileID: 6137200615024762414, guid: d46afbf6388c4c14db4daf1e74e02686,
+  blockSetPrefab: {fileID: 6137200615024762414, guid: d46afbf6388c4c14db4daf1e74e02686,
     type: 3}
   activeBalls: []
+  activeBlocks: []
+  inactiveBlocks: []
   difficulty: 0
   ballThrust: 500
+  respawnThreshold: 30
+  powerUpRandomVal: 0.1
   gameActive: 0
   blocksRemaining: 0
 --- !u!1 &226968703
@@ -445,7 +449,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.3882504, y: 0.8613333}
   m_AnchorMax: {x: 0.4632504, y: 0.99200004}
-  m_AnchoredPosition: {x: -1, y: 0}
+  m_AnchoredPosition: {x: -108, y: 0}
   m_SizeDelta: {x: 0, y: 2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &226968705
@@ -1892,7 +1896,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.53674966, y: 0.8613333}
   m_AnchorMax: {x: 0.61174965, y: 0.99200004}
-  m_AnchoredPosition: {x: 1, y: 0}
+  m_AnchoredPosition: {x: 160, y: 0}
   m_SizeDelta: {x: 0, y: 2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2091925446

@@ -39,7 +39,7 @@ public class BlockController : MonoBehaviour
         ScoreKeeper keeper= null;
         if (scorer == 0 || scorer == 1)
         {
-            keeper = coordinator.scoreKeepers[scorer];
+            keeper = coordinator.GetScoreKeeper(scorer);
 
             // Add points for hitting a block.
             keeper.AddBlockPoints();

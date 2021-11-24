@@ -106,7 +106,7 @@ public class ScoreKeeper : MonoBehaviour
     // current player loses a life.
     public void AddLostLifePoints()
     {
-        ScoreKeeper keeper = coordinator.scoreKeepers[1 - ownerID];
+        ScoreKeeper keeper = coordinator.GetScoreKeeper(1 - ownerID);
         keeper.AddScore(1000);
     }
 

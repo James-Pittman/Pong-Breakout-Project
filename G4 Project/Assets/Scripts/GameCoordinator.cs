@@ -13,7 +13,6 @@ public class GameCoordinator : MonoBehaviour
     private GameObject blockSet;
 
     // References to other objects/scripts.
-    public ScoreKeeper[] scoreKeepers;
     public List<GameObject> activeBalls = new List<GameObject>();
     public List<GameObject> activeBallsP1 = new List<GameObject>();
     public List<GameObject> activeBallsP2 = new List<GameObject>();
@@ -165,6 +164,18 @@ public class GameCoordinator : MonoBehaviour
         inactiveBlocks[randomIndex].GetComponent<BlockController>().ActivateBlock();
         activeBlocks.Add(inactiveBlocks[randomIndex]);
         inactiveBlocks.RemoveAt(randomIndex);
+    }
+
+    public ScoreKeeper GetScoreKeeper(int ownerID)
+    {
+        if (ownerID == 1 || ownerID == 2)
+        {
+            return scoreKeepers[ownerID];
+        }
+        else
+        {
+            return null;
+        }
     }
 
     // Initialize all object references as needed.

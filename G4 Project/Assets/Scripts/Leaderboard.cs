@@ -39,7 +39,6 @@ public class Leaderboard
 
             List<Record> records = (List<Record>)(bf.Deserialize(file));
             file.Close();
-            Debug.Log("Loaded " + records.Count + " records.");
             Leaderboard leaderboard = new Leaderboard(records);
             return leaderboard;
         }

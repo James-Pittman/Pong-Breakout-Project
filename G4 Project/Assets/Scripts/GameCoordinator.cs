@@ -23,7 +23,7 @@ public class GameCoordinator : MonoBehaviour
     private PaddleController[] players;
     private ScoreKeeper[] scoreKeepers;
 
-    // Difficulty
+    // Difficulty (0: beginner; 1: advanced)
     public int difficulty;
 
     // Ball Thrust Value
@@ -42,6 +42,19 @@ public class GameCoordinator : MonoBehaviour
     // Does all required actions for the game to properly start
     public void OnGameStart()
     {
+        // Set difficulty to 0 (beginner) for now.
+        difficulty = 0;
+        if (difficulty == 0)
+        {
+            ballThrust = 500;
+            powerUpRandomVal = 0.1f;
+        }
+        else if (difficulty == 1)
+        {
+            ballThrust = 600;
+            powerUpRandomVal = 0.125f;
+        }
+
         GenerateBlocks();
         GenerateBall(0);
         GenerateBall(1);

@@ -6,6 +6,16 @@ using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
+// Below is an example of how to use the leaderboard.
+//
+// leaderboard = Leaderboard.LoadRecords();
+// board = leaderboard.GetTopRecords();
+// if (leaderboard.IsTopRecord(1))
+// {
+//      Record newRecord = new Record(1, "testName");
+//      leaderboard.AddRecord(newRecord);
+//      leaderboard.SaveRecords();
+// }
 public class Leaderboard
 {
     private List<Record> recordList;
@@ -57,16 +67,14 @@ public class Leaderboard
     // Adds a new Record object to the end of the leaderboard. This method
     // assumes that a new record *should* be added. Use isTopRecord to test
     // if a record should be added first.
-    public void addRecord(Record record)
+    public void AddRecord(Record record)
     {
         if (recordList.Count < maxSize)
         {
-            Debug.Log("why am i here?");
             recordList.Add(record);
         }
         else
         {
-            Debug.Log("Record being replaced has a value of " + recordList[recordList.Count - 1].score);
             recordList[recordList.Count - 1] = record;
         }
 
@@ -75,13 +83,13 @@ public class Leaderboard
     }
 
     // Returns the List of records in the leaderboard.
-    public List<Record> getTopRecords()
+    public List<Record> GetTopRecords()
     {
         return recordList;
     }
 
     // Test if a new score (from a game that was just played) should be added to the leaderboard.
-    public Boolean isTopRecord(int score)
+    public Boolean IsTopRecord(int score)
     {
         if (recordList.Count < maxSize || score > recordList[recordList.Count - 1].score)
         {

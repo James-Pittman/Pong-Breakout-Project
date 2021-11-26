@@ -224,7 +224,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &83388888
 RectTransform:
   m_ObjectHideFlags: 0
@@ -306,6 +306,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f6d3e444ebb0914d82308559ee65ee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  one: {fileID: 0}
+  two: {fileID: 0}
+  three: {fileID: 0}
+  four: {fileID: 0}
+  five: {fileID: 0}
+  six: {fileID: 0}
+  seven: {fileID: 0}
+  eight: {fileID: 0}
+  nine: {fileID: 0}
+  ten: {fileID: 0}
 --- !u!1 &141501795
 GameObject:
   m_ObjectHideFlags: 0
@@ -340,10 +350,10 @@ RectTransform:
   m_Father: {fileID: 528769348}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.409, y: 0.07385357}
-  m_AnchorMax: {x: 0.590367, y: 0.20114645}
-  m_AnchoredPosition: {x: 0.5, y: 0.4786377}
-  m_SizeDelta: {x: -1.048706, y: -1.0426025}
+  m_AnchorMin: {x: 0.409, y: 0.100833334}
+  m_AnchorMax: {x: 0.58000004, y: 0.19900002}
+  m_AnchoredPosition: {x: 2.5, y: 1.8446045}
+  m_SizeDelta: {x: 3.8443985, y: -1.6891994}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &141501797
 MonoBehaviour:
@@ -585,6 +595,81 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 183832943}
   m_CullTransparentMesh: 1
+--- !u!1 &246282176
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 246282177}
+  - component: {fileID: 246282179}
+  - component: {fileID: 246282178}
+  m_Layer: 5
+  m_Name: Credit
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &246282177
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 246282176}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 397843853}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &246282178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 246282176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &246282179
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 246282176}
+  m_CullTransparentMesh: 1
 --- !u!1 &283950015
 GameObject:
   m_ObjectHideFlags: 0
@@ -758,6 +843,7 @@ RectTransform:
   - {fileID: 528769348}
   - {fileID: 83388888}
   - {fileID: 913344795}
+  - {fileID: 246282177}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -915,7 +1001,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: QUIT
+  m_Text: Credits
 --- !u!222 &525026418
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -935,6 +1021,7 @@ GameObject:
   - component: {fileID: 528769348}
   - component: {fileID: 528769350}
   - component: {fileID: 528769349}
+  - component: {fileID: 528769351}
   m_Layer: 5
   m_Name: Title
   m_TagString: Untagged
@@ -1003,6 +1090,28 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 528769347}
   m_CullTransparentMesh: 1
+--- !u!114 &528769351
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 528769347}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f6d3e444ebb0914d82308559ee65ee4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  one: {fileID: 1423961492}
+  two: {fileID: 403694334}
+  three: {fileID: 283950017}
+  four: {fileID: 696800033}
+  five: {fileID: 1682955769}
+  six: {fileID: 648944754}
+  seven: {fileID: 1704553647}
+  eight: {fileID: 647748263}
+  nine: {fileID: 183832945}
+  ten: {fileID: 1897642837}
 --- !u!1 &627664676
 GameObject:
   m_ObjectHideFlags: 0
@@ -1039,7 +1148,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.35318348, y: 0.24170715}
   m_AnchorMax: {x: 0.64936703, y: 0.40214646}
-  m_AnchoredPosition: {x: -1.4999847, y: 2}
+  m_AnchoredPosition: {x: -0.81614685, y: 4.2957}
   m_SizeDelta: {x: 5.050415, y: 8.5914}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &627664678
@@ -1102,6 +1211,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 528769351}
+        m_TargetAssemblyTypeName: MainMenuLeaderBoard, Assembly-CSharp
+        m_MethodName: getRecords
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

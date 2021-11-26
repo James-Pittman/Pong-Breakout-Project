@@ -182,7 +182,7 @@ public class GameCoordinator : MonoBehaviour
     public void SelectPowerUp(GameObject ball)
     {
         BallController ballStats = ball.GetComponent<BallController>();
-        int randomVal = Random.Range(3, 4);
+        int randomVal = Random.Range(1, 4);
 
         // Switch statement to control which power up is selected.
         switch (randomVal)

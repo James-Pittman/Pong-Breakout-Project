@@ -33,7 +33,7 @@ public class GameCoordinator : MonoBehaviour
     public int respawnThreshold = 30;
 
     // Power-Up Frequency
-    public float powerUpRandomVal = 0.1f;
+    public float powerUpRandomVal;
 
     // Bool to track if the game is currently running
     [HideInInspector]
@@ -47,7 +47,7 @@ public class GameCoordinator : MonoBehaviour
         if (difficulty == 0)
         {
             ballThrust = 500;
-            powerUpRandomVal = 0.1f;
+            powerUpRandomVal = 0.3f;
         }
         else if (difficulty == 1)
         {
@@ -135,23 +135,13 @@ public class GameCoordinator : MonoBehaviour
         }
         newBall.transform.position = new Vector2(ballSpawnX, 0);
 
-        // Determine angle that the ball will move.
-        float randomAngle;
-        if (movesLeft)
-        {
-            // Random angle between 2/3*pi and 4/3*pi
-            randomAngle = Random.Range(2.094f, 4.189f);
-        }
-        else
-        {
-            // Random angle between 5/3*pi and 7/3*pi
-            randomAngle = Random.Range(5.236f, 7.329f);
-        }
+        float horizontalMovement = movesLeft ? -1 : 1;
+        float verticalComponent = Random.Range(-1f, 1f);
 
-        // Assign x and y forces and apply force to the ball.
-        newBallStats.xForce = Mathf.Cos(randomAngle);
-        newBallStats.yForce = Mathf.Sin(randomAngle);
-        newBallStats.ApplyForce();
+        Vector2 direction = new Vector2(horizontalMovement, verticalComponent);
+        newBallStats.thrust = ballThrust;
+
+        newBallStats.ApplyForce(direction);
     }
 
     // Generates the set of blocks at the start of the game.
@@ -198,8 +188,7 @@ public class GameCoordinator : MonoBehaviour
         switch (randomVal)
         {
             case 1:
-                ballStats.thrust *= 2;
-                ballStats.ApplyForce();
+                ballStats.UpdateThrust(2 * ballThrust);
                 break;
             case 2:
                 GenerateBall(ballStats.ownerID);

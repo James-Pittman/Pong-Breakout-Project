@@ -14,6 +14,8 @@ public class BallController : MonoBehaviour
     // Thrust applied to the ball.
     public int thrust;
 
+    public int superCharges = 0;
+
     // Apply a force to the ball based on a vector representing the velocity.
     public void ApplyForce(Vector2 vec)
     {
@@ -74,6 +76,21 @@ public class BallController : MonoBehaviour
         ApplyForce(newVelocity);
     }
 
+    public void AddSuperCharges(int numCharges)
+    {
+        superCharges += numCharges;
+        gameObject.GetComponent<SpriteRenderer>().color = Color.red;
+    }
+
+    public void RemoveSuperCharge()
+    {
+        superCharges--;
+        if (superCharges <= 0)
+        {
+            gameObject.GetComponent<SpriteRenderer>().color = Color.white;
+        }
+    }
+
     // Start is called before the first frame update
     private void Awake()
     {
@@ -97,12 +114,10 @@ public class BallController : MonoBehaviour
         {
             if (Mathf.Abs(rb.velocity.normalized.x) < 0.1)
             {
-                Debug.Log("Nudging X because (x, y) = " + rb.velocity.normalized.x + ", " + rb.velocity.normalized.y);
                 NudgeX();
             }
             else if (Mathf.Abs(rb.velocity.normalized.y) < 0.05)
             {
-                Debug.Log("Nudging Y because (x, y) = " + rb.velocity.normalized.x + ", " + rb.velocity.normalized.y);
                 NudgeY();
             }
         }

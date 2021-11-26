@@ -47,7 +47,7 @@ public class GameCoordinator : MonoBehaviour
         if (difficulty == 0)
         {
             ballThrust = 500;
-            powerUpRandomVal = 0.3f;
+            powerUpRandomVal = 0.1f;
         }
         else if (difficulty == 1)
         {
@@ -182,7 +182,7 @@ public class GameCoordinator : MonoBehaviour
     public void SelectPowerUp(GameObject ball)
     {
         BallController ballStats = ball.GetComponent<BallController>();
-        int randomVal = Mathf.RoundToInt(Random.Range(1, 2));
+        int randomVal = Random.Range(3, 4);
 
         // Switch statement to control which power up is selected.
         switch (randomVal)
@@ -194,7 +194,7 @@ public class GameCoordinator : MonoBehaviour
                 GenerateBall(ballStats.ownerID);
                 break;
             default:
-                GenerateBall(ballStats.ownerID);
+                ballStats.AddSuperCharges(5);
                 break;
         }
     }

@@ -15,7 +15,7 @@ public class BlockController : MonoBehaviour
     {
         powerFlag = (Random.value < coordinator.powerUpRandomVal) ? true : false;
 
-        health = Random.Range(1, 8);
+        health = Random.Range(1, 5);
 
         gameObject.SetActive(true);
 
@@ -52,7 +52,7 @@ public class BlockController : MonoBehaviour
         {
             if (powerFlag)
             {
-                selectPower(col.gameObject);
+                coordinator.SelectPowerUp(col.gameObject);
                 
                 // Add points for getting a power-up.
                 if (keeper != null)
@@ -115,10 +115,5 @@ public class BlockController : MonoBehaviour
             GameObject star = gameObject.transform.GetChild(2).gameObject;
             star.GetComponent<SpriteRenderer>().sortingOrder = 2;
         }
-    }
-
-    private void selectPower(GameObject ball)
-    {
-        coordinator.GenerateBall(ball.GetComponent<BallController>().ownerID);
     }
 }

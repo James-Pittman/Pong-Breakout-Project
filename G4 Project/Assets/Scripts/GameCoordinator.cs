@@ -176,6 +176,27 @@ public class GameCoordinator : MonoBehaviour
         }
     }
 
+    public void SelectPowerUp(GameObject ball)
+    {
+        BallController ballStats = ball.GetComponent<BallController>();
+        int randomVal = Mathf.RoundToInt(Random.Range(1, 2));
+
+        // Switch statement to control which power up is selected.
+        switch (randomVal)
+        {
+            case 1:
+                ballStats.thrust *= 2;
+                ballStats.ApplyForce();
+                break;
+            case 2:
+                GenerateBall(ballStats.ownerID);
+                break;
+            default:
+                GenerateBall(ballStats.ownerID);
+                break;
+        }
+    }
+
     // Initialize all object references as needed.
     private void Start()
     {

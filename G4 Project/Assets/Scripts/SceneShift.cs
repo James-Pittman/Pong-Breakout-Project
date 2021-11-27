@@ -23,4 +23,16 @@ public class SceneShift : MonoBehaviour
         SceneManager.LoadScene("Title");
     }
 
+    public void GoToUselessLoading()
+    {
+        StartCoroutine(UselessLoading());
+        
+    }
+
+    IEnumerator UselessLoading()
+    {
+        yield return new WaitForSeconds(5);
+        GoToGame();
+    }
 }
+

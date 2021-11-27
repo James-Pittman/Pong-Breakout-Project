@@ -43,7 +43,7 @@ public class GameCoordinator : MonoBehaviour
     public void OnGameStart()
     {
         // Set difficulty to 0 (beginner) for now.
-        difficulty = 0;
+        difficulty = ImportantData.powerupFreq;
         if (difficulty == 0)
         {
             ballThrust = 500;

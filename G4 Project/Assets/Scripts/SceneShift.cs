@@ -16,6 +16,12 @@ public class SceneShift : MonoBehaviour
             ImportantData.powerupFreq = 1;
         else
             ImportantData.powerupFreq = 0;
+
+    }
+
+    public void SetPlayer(string name, int id)
+    {
+        
     }
 
     public void GoToTitle()
@@ -31,7 +37,7 @@ public class SceneShift : MonoBehaviour
 
     IEnumerator UselessLoading()
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(1);
         GoToGame();
     }
 }

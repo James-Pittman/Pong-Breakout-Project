@@ -36,6 +36,9 @@ public class GameCoordinator : MonoBehaviour
     // Power-Up Frequency
     public float powerUpRandomVal = 0.1f;
 
+    // Player names
+    public string[] playerNames = new string[] {"Player 1", "Player 2"};
+
     // Bool to track if the game is currently running
     [HideInInspector]
     public bool gameActive = false;
@@ -57,6 +60,8 @@ public class GameCoordinator : MonoBehaviour
             ballThrust = 600;
             powerUpRandomVal = 0.125f;
         }
+
+        playerNames = new string [] {ImportantData.player1Name, ImportantData.player2Name};
 
         GenerateBlocks();
         GenerateBall(0);
@@ -94,9 +99,10 @@ public class GameCoordinator : MonoBehaviour
 
         Leaderboard leaderboard = Leaderboard.LoadRecords();
         int winnerScore = GetScoreKeeper(1 - ownerID).GetScore();
+        string winnerName = playerNames[1 - ownerID];
         if (leaderboard.IsTopRecord(winnerScore))
         {
-            Record newRecord = new Record(winnerScore, "Player " + (2 - ownerID));
+            Record newRecord = new Record(winnerScore, winnerName);
             leaderboard.AddRecord(newRecord);
             leaderboard.SaveRecords();
         }

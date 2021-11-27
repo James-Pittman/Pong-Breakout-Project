@@ -399,7 +399,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 160, y: 30}
+  m_SizeDelta: {x: 300, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &48274595
 MonoBehaviour:
@@ -434,7 +434,14 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: LOREM IPSUM
+  m_Text: "The FitnessGram\u2122 Pacer Test is a multistage aerobic capacity test
+    that progressively gets more difficult as it continues. The 20 meter pacer test
+    will begin in 30 seconds. Line up at the start. The running speed starts slowly,
+    but gets faster each minute after you hear this signal. [beep] A single lap should
+    be completed each time you hear this sound. [ding] Remember to run in a straight
+    line, and run as long as possible. The second time you fail to complete a lap
+    before the sound, your test is over. The test will begin on the word start. On
+    your mark, get ready, start."
 --- !u!222 &48274596
 CanvasRenderer:
   m_ObjectHideFlags: 0

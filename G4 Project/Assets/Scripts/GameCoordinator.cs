@@ -100,6 +100,8 @@ public class GameCoordinator : MonoBehaviour
         Leaderboard leaderboard = Leaderboard.LoadRecords();
         int winnerScore = GetScoreKeeper(1 - ownerID).GetScore();
         string winnerName = playerNames[1 - ownerID];
+        ImportantData.winnerName = winnerName;
+
         if (leaderboard.IsTopRecord(winnerScore))
         {
             Record newRecord = new Record(winnerScore, winnerName);
@@ -107,15 +109,7 @@ public class GameCoordinator : MonoBehaviour
             leaderboard.SaveRecords();
         }
 
-        if (ownerID == 0)
-        {
-            SceneManager.LoadScene("Win2");
-        }
-        else 
-        {
-            SceneManager.LoadScene("Win1");
-        }
-        
+        SceneManager.LoadScene("Win");
     }
 
     // Generate a new ball. If ownerID = 0, the ball is generated in front of player 1.

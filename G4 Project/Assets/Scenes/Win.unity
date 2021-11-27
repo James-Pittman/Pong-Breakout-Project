@@ -513,6 +513,7 @@ GameObject:
   - component: {fileID: 1798537173}
   - component: {fileID: 1798537172}
   - component: {fileID: 1798537174}
+  - component: {fileID: 1798537175}
   m_Layer: 5
   m_Name: Win
   m_TagString: Untagged
@@ -591,6 +592,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0d8af302cd3bed4b98af1012a97c67f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1798537175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1798537170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd500bbaa9fb875419add2b98084e138, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  winnerField: {fileID: 2063038031}
 --- !u!1 &2005307220
 GameObject:
   m_ObjectHideFlags: 0
@@ -738,7 +752,7 @@ MonoBehaviour:
     m_BestFit: 1
     m_MinSize: 10
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0

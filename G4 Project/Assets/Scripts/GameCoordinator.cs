@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 // This class is responsible for coordinating all vital gameplay classes
 // while the game is running.
@@ -38,6 +39,8 @@ public class GameCoordinator : MonoBehaviour
     // Bool to track if the game is currently running
     [HideInInspector]
     public bool gameActive = false;
+
+    [SerializeField] private Text winner;
 
     // Does all required actions for the game to properly start
     public void OnGameStart()
@@ -76,7 +79,7 @@ public class GameCoordinator : MonoBehaviour
     }
 
     // Game Over
-    public void GameOver()
+    public void GameOver(int ownerID)
     {
         gameActive = false;
 
@@ -88,6 +91,15 @@ public class GameCoordinator : MonoBehaviour
         activeBalls.Clear();
         activeBallsP1.Clear();
         activeBallsP2.Clear();
+        if (ownerID == 0)
+        {
+            SceneManager.LoadScene("Win2");
+        }
+        else 
+        {
+            SceneManager.LoadScene("Win1");
+        }
+        
     }
 
     // Generate a new ball. If ownerID = 0, the ball is generated in front of player 1.

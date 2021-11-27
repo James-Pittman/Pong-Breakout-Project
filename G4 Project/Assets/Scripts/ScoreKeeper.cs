@@ -139,9 +139,9 @@ public class ScoreKeeper : MonoBehaviour
 
     private void EndGame()
     {
-        coordinator.GameOver();
+        coordinator.GameOver(ownerID);
         coordinator.gameActive = false;
         //col.gameObject.SetActive(false);
-        GameOverScreen.SetActive(true);
+        //GameOverScreen.SetActive(true);
     }
 }

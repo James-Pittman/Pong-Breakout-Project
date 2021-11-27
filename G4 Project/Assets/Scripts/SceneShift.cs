@@ -17,4 +17,10 @@ public class SceneShift : MonoBehaviour
         else
             ImportantData.powerupFreq = 0;
     }
+
+    public void GoToTitle()
+    {
+        SceneManager.LoadScene("Title");
+    }
+
 }

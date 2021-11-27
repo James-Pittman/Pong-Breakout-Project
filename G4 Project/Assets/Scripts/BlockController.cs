@@ -32,18 +32,31 @@ public class BlockController : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        health--;
+        BallController ball = col.gameObject.GetComponent<BallController>();
+
+        // Count the number of block levels destroyed and deduct health from the block.
+        int blocksDestroyed = 1;
+        if(ball.superCharges >= 1)
+        {
+            blocksDestroyed = health;
+            health = 0;
+            ball.RemoveSuperCharge();
+        }
+        else
+        {
+            health--;
+        }
 
         // Find the owner whose ball hit the block and add points to their score.
-        int scorer = col.gameObject.GetComponent<BallController>().ownerID;
+        int scorer = ball.ownerID;
         
-        ScoreKeeper keeper= null;
+        ScoreKeeper keeper = null;
         if (scorer == 0 || scorer == 1)
         {
             keeper = coordinator.GetScoreKeeper(scorer);
 
             // Add points for hitting a block.
-            keeper.AddBlockPoints();
+            keeper.AddBlockPoints(blocksDestroyed);
         }
 
         UpdateColor();

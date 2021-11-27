@@ -14,13 +14,81 @@ public class BallController : MonoBehaviour
     // Thrust applied to the ball.
     public int thrust;
 
-    // Vector forces of ball.
-    public float xForce, yForce;
+    public int superCharges = 0;
 
-    // Apply a force to the ball based on the balls xForce and yForce.
+    // Apply a force to the ball based on a vector representing the velocity.
+    public void ApplyForce(Vector2 vec)
+    {
+        rb.velocity = Vector2.zero;
+        rb.AddForce(vec.normalized * thrust, ForceMode2D.Force);
+    }
+
+    // Applies a force to the bell based on the current velocity.
+    // The purpose of this method is to update the velocity when the
+    // thrust is changed.
     public void ApplyForce()
     {
-        rb.AddForce(new Vector2(xForce, yForce) * thrust, ForceMode2D.Force);
+        ApplyForce(rb.velocity);
+    }
+
+    // Sets the velocity of the ball based on the speed argument.
+    // For example, if the current thrust is 500 and this function is called
+    // with a value of 1000, the speed of the ball is doubled.
+    public void UpdateThrust(int speed)
+    {
+        thrust = speed;
+        ApplyForce();
+    }
+
+    // Nudges the ball velocity so that the x component isn't super close to zero.
+    public void NudgeX()
+    {
+        Vector2 currentDirection = rb.velocity.normalized;
+        Vector2 nudge = new Vector2(Random.Range(0f, 0.1f), 0f);
+        Vector2 newVelocity;
+        if (currentDirection.x > 0)
+        {
+            newVelocity = currentDirection + nudge;
+        }
+        else
+        {
+            newVelocity = currentDirection - nudge;
+        }
+
+        ApplyForce(newVelocity);
+    }
+
+    // Nudges the ball velocity so that the y component isn't super close to zero.
+    public void NudgeY()
+    {
+        Vector2 currentDirection = rb.velocity.normalized;
+        Vector2 nudge = new Vector2(0f, Random.Range(0f, 0.1f));
+        Vector2 newVelocity;
+        if (currentDirection.y > 0)
+        {
+            newVelocity = currentDirection + nudge;
+        }
+        else
+        {
+            newVelocity = currentDirection - nudge;
+        }
+
+        ApplyForce(newVelocity);
+    }
+
+    public void AddSuperCharges(int numCharges)
+    {
+        superCharges += numCharges;
+        gameObject.GetComponent<SpriteRenderer>().color = Color.red;
+    }
+
+    public void RemoveSuperCharge()
+    {
+        superCharges--;
+        if (superCharges <= 0)
+        {
+            gameObject.GetComponent<SpriteRenderer>().color = Color.white;
+        }
     }
 
     // Start is called before the first frame update
@@ -37,6 +105,21 @@ public class BallController : MonoBehaviour
         {
             PaddleController paddle = col.gameObject.GetComponent<PaddleController>();
             ownerID = paddle.GetOwnerID();
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D col)
+    {
+        if (rb.velocity.normalized.x != 0 || rb.velocity.normalized.y != 0)
+        {
+            if (Mathf.Abs(rb.velocity.normalized.x) < 0.1)
+            {
+                NudgeX();
+            }
+            else if (Mathf.Abs(rb.velocity.normalized.y) < 0.05)
+            {
+                NudgeY();
+            }
         }
     }
 }

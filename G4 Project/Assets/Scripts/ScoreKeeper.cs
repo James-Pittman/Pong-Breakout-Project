@@ -90,12 +90,20 @@ public class ScoreKeeper : MonoBehaviour
         }
     }
 
+
+    // Add points for breaking multiple blocks (or for breaking multiple health
+    // levels of a single block).
+    public void AddBlockPoints(int numBlocks)
+    {
+        AddScore(numBlocks * 100);
+    }
+
     // This method adds points whenever the player's ball hits a block.
     public void AddBlockPoints()
     {
-        AddScore(100);
+        AddBlockPoints(1);
     }
-
+    
     // This method adds points whenever the player gains a power-up.
     public void AddPowerUpPoints()
     {

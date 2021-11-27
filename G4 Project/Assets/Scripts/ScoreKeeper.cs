@@ -110,7 +110,7 @@ public class ScoreKeeper : MonoBehaviour
         keeper.AddScore(1000);
     }
 
-    public int getOwnerID()
+    public int GetOwnerID()
     {
         return ownerID;
     }
@@ -121,11 +121,17 @@ public class ScoreKeeper : MonoBehaviour
         livesText.text = lives.ToString();
     }
 
+    public int GetScore()
+    {
+        return score;
+    }
+
     // This function adds points to the player's score.
     // If adding the points causes integer overflow, the game
     // should terminate.
     private void AddScore(int points)
     {
+        // Check for overflow
         if (score + points < 0)
         {
             EndGame();

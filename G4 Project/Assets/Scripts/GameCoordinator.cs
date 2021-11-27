@@ -78,7 +78,7 @@ public class GameCoordinator : MonoBehaviour
         */
     }
 
-    // Game Over
+    // Game Over (the ownerID is for the player who lost)
     public void GameOver(int ownerID)
     {
         gameActive = false;
@@ -91,6 +91,16 @@ public class GameCoordinator : MonoBehaviour
         activeBalls.Clear();
         activeBallsP1.Clear();
         activeBallsP2.Clear();
+
+        Leaderboard leaderboard = Leaderboard.LoadRecords();
+        int winnerScore = GetScoreKeeper(1 - ownerID).GetScore();
+        if (leaderboard.IsTopRecord(winnerScore))
+        {
+            Record newRecord = new Record(winnerScore, "Player " + (2 - ownerID));
+            leaderboard.AddRecord(newRecord);
+            leaderboard.SaveRecords();
+        }
+
         if (ownerID == 0)
         {
             SceneManager.LoadScene("Win2");

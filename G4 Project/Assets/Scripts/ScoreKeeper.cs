@@ -32,7 +32,7 @@ public class ScoreKeeper : MonoBehaviour
         coordinator = FindObjectOfType<GameCoordinator>();
 
         lives = 5;
-        livesText.text = lives.ToString();
+        livesText.text = "Lives: " + lives.ToString();
 
         score = 0;
 
@@ -44,7 +44,7 @@ public class ScoreKeeper : MonoBehaviour
         {
             if (!debugToggle)
                 lives--;
-            livesText.text = lives.ToString();
+            livesText.text = "Lives: " + lives.ToString();
 
             int ownerID = col.gameObject.GetComponent<BallController>().originID;
             
@@ -118,7 +118,7 @@ public class ScoreKeeper : MonoBehaviour
     public void StartGame()
     {
         lives = 5;
-        livesText.text = lives.ToString();
+        livesText.text = "Lives: " + lives.ToString();
     }
 
     public int GetScore()

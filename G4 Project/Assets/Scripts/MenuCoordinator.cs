@@ -16,7 +16,7 @@ public class MenuCoordinator : MonoBehaviour
     public GameObject credits;
     public GameObject serverScreen;
     public GameObject connectScreen;
-
+    public GameObject warning;
 
     private void OnEnable()
     {
@@ -26,6 +26,12 @@ public class MenuCoordinator : MonoBehaviour
     private void OnDisable()
     {
 
+    }
+
+    private void Start()
+    {
+        Screen.sleepTimeout = SleepTimeout.NeverSleep;
+        BluetoothForAndroid.Initialize();
     }
 
     public void TitleScreen()
@@ -40,6 +46,9 @@ public class MenuCoordinator : MonoBehaviour
 
     public void PlayScreen()
     {
+        if (!BluetoothForAndroid.IsBTEnabled())
+            BluetoothForAndroid.EnableBT();
+
         playMenu.SetActive(true);
     }
 
@@ -53,18 +62,24 @@ public class MenuCoordinator : MonoBehaviour
         credits.SetActive(true);
     }
 
+    public void DisableWarning()
+    {
+        warning.SetActive(false);
+    }
+
     public void StartServer()
     {
         role = "server";
 
+        serverScreen.SetActive(true);
         if (BluetoothForAndroid.IsBTEnabled())
         {
-            serverScreen.SetActive(true);
+            warning.SetActive(false);
             BluetoothForAndroid.CreateServer(UUID);
         }
         else
         {
-            return;
+            warning.SetActive(true);
         }
     }
 
@@ -72,14 +87,15 @@ public class MenuCoordinator : MonoBehaviour
     {
         role = "client";
 
+        connectScreen.SetActive(true);
         if (BluetoothForAndroid.IsBTEnabled())
         {
-            connectScreen.SetActive(true);
+            warning.SetActive(false);
             BluetoothForAndroid.ConnectToServer(UUID);
         }
         else
         {
-            return;
+            warning.SetActive(true);
         }
     }
 }

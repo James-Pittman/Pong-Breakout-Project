@@ -8,6 +8,9 @@ using UnityEngine.UI;
 // while the game is running.
 public class GameCoordinator : MonoBehaviour
 {
+    // Singleton
+    public static GameCoordinator instance { get; private set; }
+
     // All Prefabs
     public GameObject ballPrefab;
     public GameObject blockSetPrefab;
@@ -224,6 +227,9 @@ public class GameCoordinator : MonoBehaviour
     // Initialize all object references as needed.
     private void Start()
     {
+        if (instance == null)
+            instance = this;
+
         players = FindObjectsOfType<PaddleController>();
         scoreKeepers = FindObjectsOfType<ScoreKeeper>();
     }

@@ -2,12 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using SVSBluetooth;
+using UnityEngine.SceneManagement;
 
 public class MenuCoordinator : MonoBehaviour
 {
     public string UUID;
 
     string role;
+
+    private int difficulty = 0;
 
     public GameObject title;
     public GameObject leaderboard;
@@ -20,18 +23,32 @@ public class MenuCoordinator : MonoBehaviour
 
     private void OnEnable()
     {
-        //BluetoothForAndroid.BtAdapterEnabled += HideTurnOnBluetoothText;
+        BluetoothForAndroid.DeviceConnected += StartGame;
     }
 
     private void OnDisable()
     {
-
+        BluetoothForAndroid.DeviceConnected -= StartGame;
     }
 
     private void Start()
     {
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
         BluetoothForAndroid.Initialize();
+    }
+
+    public void ChangeDifficulty()
+    {
+        if (difficulty == 0)
+            difficulty = 1;
+        else
+            difficulty = 0;
+    }
+
+    private void StartGame()
+    {
+        ImportantData.powerupFreq = difficulty;
+        SceneManager.LoadScene("main");
     }
 
     public void TitleScreen()

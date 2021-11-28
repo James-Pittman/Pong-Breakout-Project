@@ -3820,9 +3820,9 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 913344798}
-        m_TargetAssemblyTypeName: SceneShift, Assembly-CSharp
-        m_MethodName: SetDifficulty
+      - m_Target: {fileID: 631399712}
+        m_TargetAssemblyTypeName: MenuCoordinator, Assembly-CSharp
+        m_MethodName: ChangeDifficulty
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4198,7 +4198,6 @@ GameObject:
   - component: {fileID: 913344795}
   - component: {fileID: 913344797}
   - component: {fileID: 913344796}
-  - component: {fileID: 913344798}
   - component: {fileID: 913344799}
   m_Layer: 5
   m_Name: PlayMenu
@@ -4206,7 +4205,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &913344795
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4274,18 +4273,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 913344794}
   m_CullTransparentMesh: 1
---- !u!114 &913344798
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 913344794}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0d8af302cd3bed4b98af1012a97c67f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &913344799
 MonoBehaviour:
   m_ObjectHideFlags: 0

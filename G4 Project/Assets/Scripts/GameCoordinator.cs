@@ -158,7 +158,7 @@ public class GameCoordinator : MonoBehaviour
             ballSpawnX = 0;
             movesLeft = (Random.value < 0.5f) ? true : false;
         }
-        newBall.transform.position = new Vector2(ballSpawnX, 0);
+        newBall.transform.position = new Vector2(ballSpawnX, 0f);
 
         float horizontalMovement = movesLeft ? -1 : 1;
         float verticalComponent = Random.Range(-1f, 1f);

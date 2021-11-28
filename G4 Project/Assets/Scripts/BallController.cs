@@ -43,17 +43,9 @@ public class BallController : MonoBehaviour
     // Nudges the ball velocity so that the x component isn't super close to zero.
     public void NudgeX()
     {
-        Vector2 currentDirection = rb.velocity.normalized;
-        Vector2 nudge = new Vector2(Random.Range(0f, 0.1f), 0f);
-        Vector2 newVelocity;
-        if (currentDirection.x > 0)
-        {
-            newVelocity = currentDirection + nudge;
-        }
-        else
-        {
-            newVelocity = currentDirection - nudge;
-        }
+        Vector2 currDir = rb.velocity.normalized; // Current direction
+        Vector2 nudge = new Vector2(Random.Range(0.1f, 0.15f), 0f);
+        Vector2 newVelocity = (Random.value < 0.5) ? currDir + nudge : currDir - nudge;
 
         ApplyForce(newVelocity);
     }
@@ -61,17 +53,9 @@ public class BallController : MonoBehaviour
     // Nudges the ball velocity so that the y component isn't super close to zero.
     public void NudgeY()
     {
-        Vector2 currentDirection = rb.velocity.normalized;
-        Vector2 nudge = new Vector2(0f, Random.Range(0f, 0.1f));
-        Vector2 newVelocity;
-        if (currentDirection.y > 0)
-        {
-            newVelocity = currentDirection + nudge;
-        }
-        else
-        {
-            newVelocity = currentDirection - nudge;
-        }
+        Vector2 currDir = rb.velocity.normalized; // Current direction
+        Vector2 nudge = new Vector2(0f, Random.Range(0.05f, 0.15f));
+        Vector2 newVelocity = (Random.value < 0.5) ? currDir + nudge : currDir - nudge;
 
         ApplyForce(newVelocity);
     }

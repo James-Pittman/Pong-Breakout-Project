@@ -58,6 +58,7 @@ public class MenuCoordinator : MonoBehaviour
 
     public void Leaderboard()
     {
+        leaderboard.GetComponent<MainMenuLeaderBoard>().GetRecords();
         leaderboard.SetActive(true);
     }
 

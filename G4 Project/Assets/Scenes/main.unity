@@ -1028,6 +1028,8 @@ MonoBehaviour:
     type: 3}
   blockSetPrefab: {fileID: 6137200615024762414, guid: d46afbf6388c4c14db4daf1e74e02686,
     type: 3}
+  player1: {fileID: 778735487}
+  player2: {fileID: 1211466902}
   activeBalls: []
   activeBallsP1: []
   activeBallsP2: []

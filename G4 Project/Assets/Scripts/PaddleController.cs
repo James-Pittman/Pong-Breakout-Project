@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,9 @@ public class PaddleController : MonoBehaviour
 {
     // Caches for gameObjects/Components
     private Rigidbody2D paddle;
+
+    // Bool to track if the paddle has moved since last update.
+    private bool movement;
 
     // Debug toggle to control movement options.
     [HideInInspector]
@@ -44,6 +48,9 @@ public class PaddleController : MonoBehaviour
 
         // Use Touch Movement
         TouchMovement();
+
+        if (movement)
+            SendUpdate();
     }
 
     // PC movement for debug
@@ -56,6 +63,15 @@ public class PaddleController : MonoBehaviour
     // Touch movement for Android
     private void TouchMovement()
     {
+        // Make sure you can't move the other players paddle.
+        if (GameCoordinator.instance.serverFlag)
+            if (ownerID != 0)
+                return;
+        else
+            if (ownerID != 1)
+                return;
+
+        movement = true;
         foreach (Touch touch in Input.touches)
         {
             Vector3 touchPos = Camera.main.ScreenToWorldPoint(touch.position);
@@ -67,5 +83,22 @@ public class PaddleController : MonoBehaviour
                 paddle.position = myPosition;
             }
         }
+    }
+
+    private void SendUpdate()
+    {
+        movement = false;
+
+        byte[] update = new byte[5];
+        byte[] yPos = new byte[4];
+        yPos = BitConverter.GetBytes(gameObject.transform.position.y);
+
+        update[0] = (byte)3;
+        update[1] = yPos[0];
+        update[2] = yPos[1];
+        update[3] = yPos[2];
+        update[4] = yPos[3];
+
+        NetworkCoordinator.instance.WriteMessage(update);
     }
 }

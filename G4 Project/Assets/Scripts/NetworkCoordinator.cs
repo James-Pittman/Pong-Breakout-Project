@@ -48,6 +48,7 @@ public class NetworkCoordinator : MonoBehaviour
                 break;
             // Paddle data.
             case 3:
+                GameCoordinator.instance.UpdatePaddleData(message);
                 break;
             default:
                 break;
@@ -57,5 +58,10 @@ public class NetworkCoordinator : MonoBehaviour
     public void WriteMessage(byte[] message)
     {
         BluetoothForAndroid.WriteMessage(message);
+    }
+
+    public void Disconnect()
+    {
+        BluetoothForAndroid.Disconnect();
     }
 }

@@ -16,6 +16,8 @@ public class GameCoordinator : MonoBehaviour
     // All Prefabs
     public GameObject ballPrefab;
     public GameObject blockSetPrefab;
+    public GameObject player1;
+    public GameObject player2;
     private GameObject blockSet;
 
     // References to other objects/scripts.
@@ -26,7 +28,6 @@ public class GameCoordinator : MonoBehaviour
     public List<GameObject> inactiveBlocks = new List<GameObject>();
 
     // Array of Players and score areas.
-    private PaddleController[] players;
     private ScoreKeeper[] scoreKeepers;
 
     // Flag for determining if this device is acting as the server.
@@ -112,6 +113,7 @@ public class GameCoordinator : MonoBehaviour
             leaderboard.SaveRecords();
         }
 
+        NetworkCoordinator.instance.Disconnect();
         SceneManager.LoadScene("Win");
     }
 
@@ -314,6 +316,27 @@ public class GameCoordinator : MonoBehaviour
         activeBalls[ballID].GetComponent<BallController>().UpdateBall(xPos, yPos);
     }
 
+    public void UpdatePaddleData(byte[] message)
+    {
+        float yPos;
+
+        byte[] posY = new byte[4];
+        posY[0] = message[1];
+        posY[1] = message[2];
+        posY[2] = message[3];
+        posY[3] = message[4];
+        yPos = BitConverter.ToSingle(posY, 0);
+
+        // If this is the server, update the clients paddle.
+        // If this is the client, update the servers paddle.
+        if (serverFlag)
+            player2.transform.position = new Vector2(player2.transform.position.x, yPos);
+        else
+            player1.transform.position = new Vector2(player1.transform.position.x, yPos);
+
+
+    }
+
 
     // Initialize all object references as needed.
     private void Start()
@@ -321,7 +344,6 @@ public class GameCoordinator : MonoBehaviour
         if (instance == null)
             instance = this;
 
-        players = FindObjectsOfType<PaddleController>();
         scoreKeepers = FindObjectsOfType<ScoreKeeper>();
 
         serverFlag = ImportantData.serverFlag;

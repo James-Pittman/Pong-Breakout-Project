@@ -53,8 +53,6 @@ public class PaddleController : MonoBehaviour
 
         // Use Touch Movement
         TouchMovement();
-
-        SendUpdate(ownerID);
     }
 
     // PC movement for debug
@@ -83,6 +81,8 @@ public class PaddleController : MonoBehaviour
                 paddle.position = myPosition;
             }
         }
+
+        SendUpdate(ownerID);
     }
 
     private void SendUpdate(int owner)

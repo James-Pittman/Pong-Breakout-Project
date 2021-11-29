@@ -46,7 +46,7 @@ public class DebugMode : MonoBehaviour
         // Restart the game
         if (GUI.Button(new Rect(20, 70, 100, 20), "Restart"))
         {
-            coordinator.RestartGame();
+            //coordinator.RestartGame();
         }
 
         // Spawn a new ball in center of screen

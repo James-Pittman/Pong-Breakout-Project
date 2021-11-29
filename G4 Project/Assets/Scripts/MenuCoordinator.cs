@@ -8,8 +8,6 @@ public class MenuCoordinator : MonoBehaviour
 {
     public string UUID;
 
-    string role;
-
     private int difficulty = 0;
 
     public GameObject title;
@@ -87,12 +85,11 @@ public class MenuCoordinator : MonoBehaviour
 
     public void StartServer()
     {
-        role = "server";
-
         serverScreen.SetActive(true);
         if (BluetoothForAndroid.IsBTEnabled())
         {
             warning.SetActive(false);
+            ImportantData.serverFlag = true;
             BluetoothForAndroid.CreateServer(UUID);
         }
         else
@@ -103,12 +100,11 @@ public class MenuCoordinator : MonoBehaviour
 
     public void ConnectServer()
     {
-        role = "client";
-
         connectScreen.SetActive(true);
         if (BluetoothForAndroid.IsBTEnabled())
         {
             warning.SetActive(false);
+            ImportantData.serverFlag = false;
             BluetoothForAndroid.ConnectToServer(UUID);
         }
         else

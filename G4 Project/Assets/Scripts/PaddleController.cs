@@ -24,6 +24,11 @@ public class PaddleController : MonoBehaviour
         return ownerID;
     }
 
+    public void UpdatePosition(float yPos)
+    {
+        gameObject.transform.position = new Vector2(0, yPos);
+    }
+
     // Initialize caches.
     private void Start()
     {
@@ -49,8 +54,7 @@ public class PaddleController : MonoBehaviour
         // Use Touch Movement
         TouchMovement();
 
-        //if (movement)
-        SendUpdate();
+        SendUpdate(ownerID);
     }
 
     // PC movement for debug
@@ -63,15 +67,9 @@ public class PaddleController : MonoBehaviour
     // Touch movement for Android
     private void TouchMovement()
     {
-        /*
         // Make sure you can't move the other players paddle.
-        if (ImportantData.serverFlag)
-            if (ownerID != 0)
-                return;
-        else
-            if (ownerID != 1)
-                return;
-                */
+        if (ownerID != Convert.ToInt32(!GameCoordinator.instance.serverFlag))
+            return;
 
         //movement = true;
         foreach (Touch touch in Input.touches)
@@ -87,19 +85,23 @@ public class PaddleController : MonoBehaviour
         }
     }
 
-    private void SendUpdate()
+    private void SendUpdate(int owner)
     {
-        //movement = false;
-
-        byte[] update = new byte[5];
+        byte[] update = new byte[6];
         byte[] yPos = new byte[4];
         yPos = BitConverter.GetBytes(gameObject.transform.position.y);
 
         update[0] = (byte)3;
-        update[1] = yPos[0];
-        update[2] = yPos[1];
-        update[3] = yPos[2];
-        update[4] = yPos[3];
+
+        if (owner == 0)
+            update[1] = (byte)1;
+        else
+            update[1] = (byte)0;
+
+        update[2] = yPos[0];
+        update[3] = yPos[1];
+        update[4] = yPos[2];
+        update[5] = yPos[3];
 
         NetworkCoordinator.instance.WriteMessage(update);
     }

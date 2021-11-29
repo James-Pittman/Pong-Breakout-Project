@@ -122,7 +122,7 @@ public class GameCoordinator : MonoBehaviour
     public void GenerateBall(int ownerID)
     {
         // Instantiate the new ball.
-        GameObject newBall = Instantiate(ballPrefab);
+        GameObject newBall = Instantiate(ballPrefab, new Vector2(4, 0), transform.rotation);
 
         // Update ball lists accordingly.
         activeBalls.Add(newBall);
@@ -321,20 +321,23 @@ public class GameCoordinator : MonoBehaviour
         float yPos;
 
         byte[] posY = new byte[4];
-        posY[0] = message[1];
-        posY[1] = message[2];
-        posY[2] = message[3];
-        posY[3] = message[4];
+        posY[0] = message[2];
+        posY[1] = message[3];
+        posY[2] = message[4];
+        posY[3] = message[5];
         yPos = BitConverter.ToSingle(posY, 0);
 
-        // If this is the server, update the clients paddle.
-        // If this is the client, update the servers paddle.
-        if (serverFlag)
-            player2.transform.position = new Vector2(player2.transform.position.x, yPos);
-        else
-            player1.transform.position = new Vector2(player1.transform.position.x, yPos);
-
-
+        switch ((int)message[1])
+        {
+            case 0:
+                player1.GetComponent<PaddleController>().UpdatePosition(yPos);
+                break;
+            case 1:
+                player2.GetComponent<PaddleController>().UpdatePosition(yPos);
+                break;
+            default:
+                return;
+        }
     }
 
 

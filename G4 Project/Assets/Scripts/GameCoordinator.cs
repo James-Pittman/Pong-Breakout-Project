@@ -291,7 +291,8 @@ public class GameCoordinator : MonoBehaviour
         int blockID = (int)message[1];
         bool flag = Convert.ToBoolean(message[2]);
         int health = (int)message[3];
-        activeBlocks[blockID].GetComponent<BlockController>().UpdateBlock(flag, health);
+        int ballID = (int)message[4];
+        activeBlocks[blockID].GetComponent<BlockController>().UpdateBlock(flag, health, ballID);
     }
 
     public void UpdateBallData(byte[] message)

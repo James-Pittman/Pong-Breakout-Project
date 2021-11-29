@@ -24,7 +24,7 @@ public class GameScene : MonoBehaviour {
     // Fields for interpolating the movement of an enemy
     Queue<Vector2> posEnemyBuffer = new Queue<Vector2>();
     bool bufferReady;
-    int frame;
+    //int frame;
     int stepToNewPoint;
     Vector2 step;
 
@@ -173,7 +173,7 @@ public class GameScene : MonoBehaviour {
     // the return of the player’s tank to the starting position
     public void ReturnPlayerToStartingPosion() {
         tankPlayer.transform.position = new Vector2(-3.256f, 0);
-        frame = 0;
+        //frame = 0;
         playerHealth = 100;
         UpdateVievHealth();
     }

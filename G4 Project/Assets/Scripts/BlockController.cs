@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,19 +7,36 @@ public class BlockController : MonoBehaviour
 {
     private int health;
 
+    private int id;
+
     [HideInInspector]
     public bool powerFlag = false;
 
     private GameCoordinator coordinator;
 
-    public void ActivateBlock()
+    public void ActivateBlock(int blockNum)
     {
-        powerFlag = (Random.value < coordinator.powerUpRandomVal) ? true : false;
-
-        health = Random.Range(1, 5);
+        if (blockNum != -1)
+            id = blockNum;
 
         gameObject.SetActive(true);
 
+        if (!coordinator.serverFlag)
+            return;
+
+        powerFlag = (UnityEngine.Random.value < coordinator.powerUpRandomVal) ? true : false;
+        health = UnityEngine.Random.Range(1, 5);
+        UpdateStarVisibility();
+        UpdateColor();
+
+        NetworkCoordinator.instance.WriteMessage(new byte[4] { (byte)1, (byte)id, Convert.ToByte(powerFlag), (byte)health });
+    }
+
+    // Updates the block based on server data received.
+    public void UpdateBlock(bool flag, int healthUpdate)
+    {
+        powerFlag = flag;
+        health = healthUpdate;
         UpdateStarVisibility();
         UpdateColor();
     }

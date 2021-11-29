@@ -30,7 +30,7 @@ public class GameCoordinator : MonoBehaviour
     private ScoreKeeper[] scoreKeepers;
 
     // Flag for determining if this device is acting as the server.
-    public int serverFlag;
+    public bool serverFlag;
 
     // Difficulty (0: beginner; 1: advanced)
     public int difficulty;
@@ -73,31 +73,33 @@ public class GameCoordinator : MonoBehaviour
             powerUpRandomVal = 0.125f;
         }
 
-        playerNames = new string [] {ImportantData.player1Name, ImportantData.player2Name};
-
-        // The following code block is to convert the player names into bytes and send it to the other device.
-        byte[] player1 = Encoding.ASCII.GetBytes(playerNames[0]);
-        byte[] player2 = Encoding.ASCII.GetBytes(playerNames[1]);
-
-        byte[] player1Message = new byte[2 + player1.Length];
-        byte[] player2Message = new byte[2 + player2.Length];
-
-        player1Message[0] = (byte)0;
-        player1Message[1] = (byte)1;
-        for (int i = 2; i < player1.Length; i++)
+        // The following code block sets the player names for both devices.
+        if (serverFlag)
         {
-            player1Message[i] = player1[i - 2];
-        }
+            playerNames = new string[] { ImportantData.player1Name, ImportantData.player2Name };
+            byte[] player1 = Encoding.ASCII.GetBytes(playerNames[0]);
+            byte[] player2 = Encoding.ASCII.GetBytes(playerNames[1]);
 
-        player1Message[0] = (byte)0;
-        player1Message[1] = (byte)2;
-        for (int i = 2; i < player2.Length; i++)
-        {
-            player2Message[i] = player2[i - 2];
-        }
+            byte[] player1Message = new byte[2 + player1.Length];
+            byte[] player2Message = new byte[2 + player2.Length];
 
-        NetworkCoordinator.instance.WriteMessage(player1Message);
-        NetworkCoordinator.instance.WriteMessage(player2Message);
+            player1Message[0] = (byte)0;
+            player1Message[1] = (byte)1;
+            for (int i = 2; i < player1.Length; i++)
+            {
+                player1Message[i] = player1[i - 2];
+            }
+
+            player1Message[0] = (byte)0;
+            player1Message[1] = (byte)2;
+            for (int i = 2; i < player2.Length; i++)
+            {
+                player2Message[i] = player2[i - 2];
+            }
+
+            NetworkCoordinator.instance.WriteMessage(player1Message);
+            NetworkCoordinator.instance.WriteMessage(player2Message);
+        }
 
         // Generate blocks and balls.
         GenerateBlocks();
@@ -153,6 +155,11 @@ public class GameCoordinator : MonoBehaviour
             activeBallsP2.Add(newBall);
         }
 
+        // If device isn't the server, stop here. The position of the ball will be updated
+        // by the server.
+        //if (!serverFlag)
+        //    return;
+
         // Assign ownerID and thrust to the new ball.
         BallController newBallStats = newBall.GetComponent<BallController>();
         newBallStats.ownerID = ownerID;
@@ -193,10 +200,14 @@ public class GameCoordinator : MonoBehaviour
     public void GenerateBlocks()
     {
         blockSet = Instantiate(blockSetPrefab);
+        int i = 0;
         foreach (Transform block in blockSet.transform)
         {
             activeBlocks.Add(block.gameObject);
-            block.GetComponent<BlockController>().ActivateBlock();
+
+            block.GetComponent<BlockController>().ActivateBlock(i);
+
+            i++;
         }
     }
 
@@ -207,7 +218,7 @@ public class GameCoordinator : MonoBehaviour
         int randomIndex = UnityEngine.Random.Range(0, inactiveBlocks.Count - 1);
 
         // Activate the selected block, and update lists accordingly.
-        inactiveBlocks[randomIndex].GetComponent<BlockController>().ActivateBlock();
+        inactiveBlocks[randomIndex].GetComponent<BlockController>().ActivateBlock(-1);
         activeBlocks.Add(inactiveBlocks[randomIndex]);
         inactiveBlocks.RemoveAt(randomIndex);
     }
@@ -226,6 +237,9 @@ public class GameCoordinator : MonoBehaviour
 
     public void SelectPowerUp(GameObject ball)
     {
+        if (!serverFlag)
+            return;
+
         BallController ballStats = ball.GetComponent<BallController>();
         int randomVal = UnityEngine.Random.Range(1, 4);
 
@@ -264,6 +278,14 @@ public class GameCoordinator : MonoBehaviour
         }
     }
 
+    public void UpdateBlockData(byte[] message)
+    {
+        int blockID = (int)message[1];
+        bool flag = Convert.ToBoolean(message[2]);
+        int health = (int)message[3];
+        activeBalls[blockID].GetComponent<BlockController>().UpdateBlock(flag, health);
+    }
+
 
     // Initialize all object references as needed.
     private void Start()
@@ -273,6 +295,8 @@ public class GameCoordinator : MonoBehaviour
 
         players = FindObjectsOfType<PaddleController>();
         scoreKeepers = FindObjectsOfType<ScoreKeeper>();
+
+        serverFlag = ImportantData.serverFlag;
 
         OnGameStart();
     }

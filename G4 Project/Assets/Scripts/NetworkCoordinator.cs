@@ -7,6 +7,8 @@ public class NetworkCoordinator : MonoBehaviour
 {
     public static NetworkCoordinator instance;
 
+    public List<int> activeBlockIds = new List<int>();
+
     private void OnEnable()
     {
         BluetoothForAndroid.ReceivedByteMessage += GetMessage;
@@ -21,6 +23,11 @@ public class NetworkCoordinator : MonoBehaviour
     {
         if (instance == null)
             instance = this;
+
+        for (int i = 0; i < GameCoordinator.instance.activeBalls.Count; i++)
+        {
+            activeBlockIds.Add(i);
+        }
     }
 
     void GetMessage(byte[] message)
@@ -30,6 +37,10 @@ public class NetworkCoordinator : MonoBehaviour
             // Start of game data.
             case 0:
                 GameCoordinator.instance.UpdateStartData(message);
+                break;
+            // Block data.
+            case 1:
+                GameCoordinator.instance.UpdateBlockData(message);
                 break;
             default:
                 break;

@@ -304,8 +304,6 @@ GameObject:
   - component: {fileID: 211918797}
   - component: {fileID: 211918796}
   - component: {fileID: 211918795}
-  - component: {fileID: 211918798}
-  - component: {fileID: 211918799}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -378,49 +376,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &211918798
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 211918794}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b466c53fa26799549998925f7c072408, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &211918799
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 211918794}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f3b64841ef2bc04dbe86726f5f4b288, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ballPrefab: {fileID: 871786936212859641, guid: 62c160160e55aeb4f8c10f9e08c04a66,
-    type: 3}
-  blockSetPrefab: {fileID: 6137200615024762414, guid: d46afbf6388c4c14db4daf1e74e02686,
-    type: 3}
-  activeBalls: []
-  activeBallsP1: []
-  activeBallsP2: []
-  activeBlocks: []
-  inactiveBlocks: []
-  serverFlag: 0
-  difficulty: 0
-  ballThrust: 500
-  respawnThreshold: 30
-  powerUpRandomVal: 0.1
-  playerNames:
-  - Player 1
-  - Player 2
-  gameActive: 0
-  winner: {fileID: 0}
 --- !u!1 &226968703
 GameObject:
   m_ObjectHideFlags: 0
@@ -563,6 +518,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 940cddb50c9ad0b43841073ae7d3da8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  activeBlockIds: 
 --- !u!4 &479096011
 Transform:
   m_ObjectHideFlags: 0
@@ -1025,6 +981,81 @@ Transform:
   - {fileID: 201617390}
   m_Father: {fileID: 0}
   m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1296665002
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1296665005}
+  - component: {fileID: 1296665004}
+  - component: {fileID: 1296665003}
+  m_Layer: 0
+  m_Name: Game Coordinator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1296665003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1296665002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b466c53fa26799549998925f7c072408, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1296665004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1296665002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f3b64841ef2bc04dbe86726f5f4b288, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ballPrefab: {fileID: 871786936212859641, guid: 62c160160e55aeb4f8c10f9e08c04a66,
+    type: 3}
+  blockSetPrefab: {fileID: 6137200615024762414, guid: d46afbf6388c4c14db4daf1e74e02686,
+    type: 3}
+  activeBalls: []
+  activeBallsP1: []
+  activeBallsP2: []
+  activeBlocks: []
+  inactiveBlocks: []
+  serverFlag: 0
+  difficulty: 0
+  ballThrust: 500
+  respawnThreshold: 30
+  powerUpRandomVal: 0.1
+  playerNames:
+  - Player 1
+  - Player 2
+  gameActive: 0
+  winner: {fileID: 0}
+--- !u!4 &1296665005
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1296665002}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.1700219, y: 0.02769299, z: -10.625113}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1358086088
 GameObject:

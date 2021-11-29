@@ -68,8 +68,8 @@ public class PaddleController : MonoBehaviour
     private void TouchMovement()
     {
         // Make sure you can't move the other players paddle.
-        if (ownerID != Convert.ToInt32(!GameCoordinator.instance.serverFlag))
-            return;
+        //if (ownerID != Convert.ToInt32(!GameCoordinator.instance.serverFlag))
+        //    return;
 
         //movement = true;
         foreach (Touch touch in Input.touches)

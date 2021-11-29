@@ -64,7 +64,7 @@ public class PaddleController : MonoBehaviour
     private void TouchMovement()
     {
         // Make sure you can't move the other players paddle.
-        if (GameCoordinator.instance.serverFlag)
+        if (ImportantData.serverFlag)
             if (ownerID != 0)
                 return;
         else

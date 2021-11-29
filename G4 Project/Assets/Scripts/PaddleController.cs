@@ -49,8 +49,8 @@ public class PaddleController : MonoBehaviour
         // Use Touch Movement
         TouchMovement();
 
-        if (movement)
-            SendUpdate();
+        //if (movement)
+        SendUpdate();
     }
 
     // PC movement for debug
@@ -63,6 +63,7 @@ public class PaddleController : MonoBehaviour
     // Touch movement for Android
     private void TouchMovement()
     {
+        /*
         // Make sure you can't move the other players paddle.
         if (ImportantData.serverFlag)
             if (ownerID != 0)
@@ -70,8 +71,9 @@ public class PaddleController : MonoBehaviour
         else
             if (ownerID != 1)
                 return;
+                */
 
-        movement = true;
+        //movement = true;
         foreach (Touch touch in Input.touches)
         {
             Vector3 touchPos = Camera.main.ScreenToWorldPoint(touch.position);
@@ -87,7 +89,7 @@ public class PaddleController : MonoBehaviour
 
     private void SendUpdate()
     {
-        movement = false;
+        //movement = false;
 
         byte[] update = new byte[5];
         byte[] yPos = new byte[4];

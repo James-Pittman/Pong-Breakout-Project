@@ -8,5 +8,5 @@ public class ImportantData
     public static string player1Name = "Player 1";
     public static string player2Name = "Player 2";
     public static string winnerName = "Player 1";
-    public static bool serverFlag = false;
+    public static bool serverFlag = true;
 }

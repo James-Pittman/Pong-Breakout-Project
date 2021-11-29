@@ -24,7 +24,7 @@ public class NetworkCoordinator : MonoBehaviour
         if (instance == null)
             instance = this;
 
-        for (int i = 0; i < GameCoordinator.instance.activeBalls.Count; i++)
+        for (int i = 0; i < 90; i++)
         {
             activeBlockIds.Add(i);
         }
@@ -41,6 +41,13 @@ public class NetworkCoordinator : MonoBehaviour
             // Block data.
             case 1:
                 GameCoordinator.instance.UpdateBlockData(message);
+                break;
+            // Ball data.
+            case 2:
+                GameCoordinator.instance.UpdateBallData(message);
+                break;
+            // Paddle data.
+            case 3:
                 break;
             default:
                 break;

@@ -76,29 +76,7 @@ public class GameCoordinator : MonoBehaviour
         // The following code block sets the player names for both devices.
         if (serverFlag)
         {
-            playerNames = new string[] { ImportantData.player1Name, ImportantData.player2Name };
-            byte[] player1 = Encoding.ASCII.GetBytes(playerNames[0]);
-            byte[] player2 = Encoding.ASCII.GetBytes(playerNames[1]);
-
-            byte[] player1Message = new byte[2 + player1.Length];
-            byte[] player2Message = new byte[2 + player2.Length];
-
-            player1Message[0] = (byte)0;
-            player1Message[1] = (byte)1;
-            for (int i = 2; i < player1.Length; i++)
-            {
-                player1Message[i] = player1[i - 2];
-            }
-
-            player1Message[0] = (byte)0;
-            player1Message[1] = (byte)2;
-            for (int i = 2; i < player2.Length; i++)
-            {
-                player2Message[i] = player2[i - 2];
-            }
-
-            NetworkCoordinator.instance.WriteMessage(player1Message);
-            NetworkCoordinator.instance.WriteMessage(player2Message);
+            SendNames();
         }
 
         // Generate blocks and balls.
@@ -155,16 +133,17 @@ public class GameCoordinator : MonoBehaviour
             activeBallsP2.Add(newBall);
         }
 
-        // If device isn't the server, stop here. The position of the ball will be updated
-        // by the server.
-        //if (!serverFlag)
-        //    return;
-
         // Assign ownerID and thrust to the new ball.
         BallController newBallStats = newBall.GetComponent<BallController>();
         newBallStats.ownerID = ownerID;
         newBallStats.thrust = ballThrust;
         newBallStats.originID = ownerID;
+        newBallStats.ballID = activeBalls.IndexOf(newBall);
+
+        // If device isn't the server, stop here. The position of the ball will be updated
+        // by the server.
+        if (!serverFlag)
+            return;
 
         // Determine the x-coordinate where the ball is spawned (ballSpawnX)
         // and which direction the ball will move.
@@ -258,6 +237,33 @@ public class GameCoordinator : MonoBehaviour
         }
     }
 
+    private void SendNames()
+    {
+        playerNames = new string[] { ImportantData.player1Name, ImportantData.player2Name };
+        byte[] player1 = Encoding.ASCII.GetBytes(playerNames[0]);
+        byte[] player2 = Encoding.ASCII.GetBytes(playerNames[1]);
+
+        byte[] player1Message = new byte[2 + (player1.Length)];
+        byte[] player2Message = new byte[2 + (player2.Length)];
+
+        player1Message[0] = (byte)0;
+        player1Message[1] = (byte)1;
+        for (int i = 2; i < player1.Length; i++)
+        {
+            player1Message[i] = player1[i - 2];
+        }
+
+        player2Message[0] = (byte)0;
+        player2Message[1] = (byte)2;
+        for (int i = 2; i < player2.Length; i++)
+        {
+            player2Message[i] = player2[i - 2];
+        }
+
+        NetworkCoordinator.instance.WriteMessage(player1Message);
+        NetworkCoordinator.instance.WriteMessage(player2Message);
+    }
+
     //
     // METHODS FOR THE CLIENT DEVICE
     //
@@ -283,7 +289,29 @@ public class GameCoordinator : MonoBehaviour
         int blockID = (int)message[1];
         bool flag = Convert.ToBoolean(message[2]);
         int health = (int)message[3];
-        activeBalls[blockID].GetComponent<BlockController>().UpdateBlock(flag, health);
+        activeBlocks[blockID].GetComponent<BlockController>().UpdateBlock(flag, health);
+    }
+
+    public void UpdateBallData(byte[] message)
+    {
+        int ballID = (int)message[1];
+        float xPos;
+        float yPos;
+
+        byte[] posX = new byte[4];
+        byte[] posY = new byte[4];
+        posX[0] = message[2];
+        posX[1] = message[3];
+        posX[2] = message[4];
+        posX[3] = message[5];
+        posY[0] = message[6];
+        posY[1] = message[7];
+        posY[2] = message[8];
+        posY[3] = message[9];
+        xPos = BitConverter.ToSingle(posX, 0);
+        yPos = BitConverter.ToSingle(posY, 0);
+
+        activeBalls[ballID].GetComponent<BallController>().UpdateBall(xPos, yPos);
     }
 
 
@@ -306,6 +334,9 @@ public class GameCoordinator : MonoBehaviour
     {
         if (gameActive)
         {
+            foreach (GameObject ball in activeBalls)
+                ball.GetComponent<BallController>().ballID = activeBalls.IndexOf(ball);
+
             if (activeBallsP1.Count == 0)
             {
                 GenerateBall(0);

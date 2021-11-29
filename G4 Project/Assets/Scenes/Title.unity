@@ -3445,7 +3445,7 @@ GameObject:
   - component: {fileID: 631399713}
   - component: {fileID: 631399712}
   m_Layer: 0
-  m_Name: MenuCoordinator
+  m_Name: Menu Coordinator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

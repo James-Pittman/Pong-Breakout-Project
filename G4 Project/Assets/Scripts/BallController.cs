@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,9 @@ public class BallController : MonoBehaviour
 
     // Id of the current balls owner (player).
     public int ownerID, originID;
+
+    // Id of this ball relative to the scene.
+    public int ballID = -1;
 
     // Thrust applied to the ball.
     public int thrust;
@@ -44,8 +48,8 @@ public class BallController : MonoBehaviour
     public void NudgeX()
     {
         Vector2 currDir = rb.velocity.normalized; // Current direction
-        Vector2 nudge = new Vector2(Random.Range(0.1f, 0.15f), 0f);
-        Vector2 newVelocity = (Random.value < 0.5) ? currDir + nudge : currDir - nudge;
+        Vector2 nudge = new Vector2(UnityEngine.Random.Range(0.1f, 0.15f), 0f);
+        Vector2 newVelocity = (UnityEngine.Random.value < 0.5) ? currDir + nudge : currDir - nudge;
 
         ApplyForce(newVelocity);
     }
@@ -54,8 +58,8 @@ public class BallController : MonoBehaviour
     public void NudgeY()
     {
         Vector2 currDir = rb.velocity.normalized; // Current direction
-        Vector2 nudge = new Vector2(0f, Random.Range(0.05f, 0.15f));
-        Vector2 newVelocity = (Random.value < 0.5) ? currDir + nudge : currDir - nudge;
+        Vector2 nudge = new Vector2(0f, UnityEngine.Random.Range(0.05f, 0.15f));
+        Vector2 newVelocity = (UnityEngine.Random.value < 0.5) ? currDir + nudge : currDir - nudge;
 
         ApplyForce(newVelocity);
     }
@@ -75,11 +79,48 @@ public class BallController : MonoBehaviour
         }
     }
 
+    public void UpdateBall(float xPos, float yPos)
+    {
+        gameObject.transform.position = new Vector2(xPos, yPos);
+    }
+
     // Start is called before the first frame update
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         coordinator = FindObjectOfType<GameCoordinator>();
+    }
+
+    private void Update()
+    {
+        if (GameCoordinator.instance.serverFlag)
+            SendUpdate();
+    }
+
+    private void SendUpdate()
+    {
+        if (ballID == -1)
+            return;
+
+        byte[] position = new byte[10];
+        byte[] xPos = new byte[4];
+        byte[] yPos = new byte[4];
+
+        xPos = BitConverter.GetBytes(gameObject.transform.position.x);
+        yPos = BitConverter.GetBytes(gameObject.transform.position.y);
+
+        position[0] = (byte)2;
+        position[1] = (byte)ballID;
+        position[2] = xPos[0];
+        position[3] = xPos[1];
+        position[4] = xPos[2];
+        position[5] = xPos[3];
+        position[6] = yPos[0];
+        position[7] = yPos[1];
+        position[8] = yPos[2];
+        position[9] = yPos[3];
+
+        NetworkCoordinator.instance.WriteMessage(position);
     }
 
     // If the ball hit's a paddle, update the balls ownerID.

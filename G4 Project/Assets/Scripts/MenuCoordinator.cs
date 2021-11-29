@@ -49,6 +49,11 @@ public class MenuCoordinator : MonoBehaviour
         SceneManager.LoadScene("main");
     }
 
+    public void MainMenu()
+    {
+        SceneManager.LoadScene("Title");
+    }
+
     public void TitleScreen()
     {
         title.SetActive(true);

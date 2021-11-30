@@ -320,17 +320,10 @@ public class GameCoordinator : MonoBehaviour
         posY[3] = message[5];
         yPos = BitConverter.ToSingle(posY, 0);
 
-        switch ((int)message[1])
-        {
-            case 0:
-                player1.GetComponent<PaddleController>().UpdatePosition(yPos);
-                break;
-            case 1:
-                player2.GetComponent<PaddleController>().UpdatePosition(yPos);
-                break;
-            default:
-                return;
-        }
+        if (serverFlag)
+            player2.GetComponent<PaddleController>().UpdatePosition(yPos);
+        else
+            player1.GetComponent<PaddleController>().UpdatePosition(yPos);
     }
 
 

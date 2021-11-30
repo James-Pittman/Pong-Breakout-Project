@@ -26,6 +26,7 @@ public class GameCoordinator : MonoBehaviour
     public List<GameObject> activeBallsP2 = new List<GameObject>();
     public List<GameObject> activeBlocks = new List<GameObject>();
     public List<GameObject> inactiveBlocks = new List<GameObject>();
+    public List<GameObject> allBlocks = new List<GameObject>();
 
     // Array of Players and score areas.
     private ScoreKeeper[] scoreKeepers;
@@ -177,6 +178,7 @@ public class GameCoordinator : MonoBehaviour
         foreach (Transform block in blockSet.transform)
         {
             activeBlocks.Add(block.gameObject);
+            allBlocks.Add(block.gameObject);
 
             block.GetComponent<BlockController>().ActivateBlock(i);
 
@@ -284,7 +286,7 @@ public class GameCoordinator : MonoBehaviour
         bool flag = Convert.ToBoolean(message[2]);
         int health = (int)message[3];
         int ballID = (int)message[4];
-        activeBlocks[blockID].GetComponent<BlockController>().UpdateBlock(flag, health, ballID);
+        allBlocks[blockID].GetComponent<BlockController>().UpdateBlock(flag, health, ballID);
     }
 
     public void UpdateBallData(byte[] message)

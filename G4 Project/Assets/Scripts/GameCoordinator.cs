@@ -113,7 +113,7 @@ public class GameCoordinator : MonoBehaviour
             leaderboard.SaveRecords();
         }
 
-        SceneManager.LoadScene("Win");
+        NetworkCoordinator.instance.Disconnect();
     }
 
     // Generate a new ball. If ownerID = 0, the ball is generated in front of player 1.

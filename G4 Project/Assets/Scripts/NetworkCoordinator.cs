@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using SVSBluetooth;
+using UnityEngine.SceneManagement;
 
 public class NetworkCoordinator : MonoBehaviour
 {
@@ -12,11 +13,13 @@ public class NetworkCoordinator : MonoBehaviour
     private void OnEnable()
     {
         BluetoothForAndroid.ReceivedByteMessage += GetMessage;
+        BluetoothForAndroid.DeviceDisconnected += EndGame;
     }
 
     private void OnDisable()
     {
         BluetoothForAndroid.ReceivedByteMessage -= GetMessage;
+        BluetoothForAndroid.DeviceDisconnected -= EndGame;
     }
 
     private void Start()
@@ -63,5 +66,10 @@ public class NetworkCoordinator : MonoBehaviour
     public void Disconnect()
     {
         BluetoothForAndroid.Disconnect();
+    }
+
+    public void EndGame()
+    {
+        SceneManager.LoadScene("Win");
     }
 }

@@ -179,9 +179,10 @@ public class GameCoordinator : MonoBehaviour
         {
             activeBlocks.Add(block.gameObject);
             allBlocks.Add(block.gameObject);
-
+        }
+        foreach (Transform block in blockSet.transform)
+        {
             block.GetComponent<BlockController>().ActivateBlock(i);
-
             i++;
         }
     }
@@ -189,6 +190,9 @@ public class GameCoordinator : MonoBehaviour
     // Respawns a random block from the block set.
     public void RespawnBlocks()
     {
+        if (!serverFlag)
+            return;
+
         // Select a random block from the list of inactive blocks.
         int randomIndex = UnityEngine.Random.Range(0, inactiveBlocks.Count - 1);
 

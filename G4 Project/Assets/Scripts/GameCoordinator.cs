@@ -66,7 +66,7 @@ public class GameCoordinator : MonoBehaviour
         difficulty = ImportantData.powerupFreq;
         if (difficulty == 0)
         {
-            ballThrust = 100;
+            ballThrust = 300;
             powerUpRandomVal = 0.1f;
         }
         else if (difficulty == 1)

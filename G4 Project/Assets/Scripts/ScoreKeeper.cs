@@ -31,7 +31,7 @@ public class ScoreKeeper : MonoBehaviour
     {
         coordinator = FindObjectOfType<GameCoordinator>();
 
-        lives = 15;
+        lives = 10;
         livesText.text = "Lives: " + lives.ToString();
 
         score = 0;

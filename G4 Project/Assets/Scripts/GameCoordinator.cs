@@ -54,6 +54,10 @@ public class GameCoordinator : MonoBehaviour
 
     [SerializeField] private Text winner;
 
+    private bool waitFlag = false;
+
+    private float waitTime = 5.0f;
+
     //
     // METHODS FOR THE SERVER DEVICE
     //
@@ -80,11 +84,8 @@ public class GameCoordinator : MonoBehaviour
             SendNames();
         }
 
-        // Generate blocks and balls.
-        GenerateBlocks();
-        GenerateBall(0);
-        GenerateBall(1);
-        gameActive = true;
+        waitFlag = true;
+        waitTime = 5.0f;
     }
 
     // Game Over (the ownerID is for the player who lost)
@@ -344,6 +345,9 @@ public class GameCoordinator : MonoBehaviour
     // Initialize all object references as needed.
     private void Start()
     {
+        waitFlag = true;
+        waitTime = 5.0f;
+
         if (instance == null)
             instance = this;
 
@@ -359,6 +363,20 @@ public class GameCoordinator : MonoBehaviour
     {
         if (gameActive)
         {
+            if (waitFlag)
+            {
+                waitTime -= Time.deltaTime;
+            }
+            if (waitTime <= 0)
+            {
+                // Generate blocks and balls.
+                GenerateBlocks();
+                GenerateBall(0);
+                GenerateBall(1);
+                gameActive = true;
+                waitFlag = false;
+            }
+
             foreach (GameObject ball in activeBalls)
                 ball.GetComponent<BallController>().ballID = activeBalls.IndexOf(ball);
 

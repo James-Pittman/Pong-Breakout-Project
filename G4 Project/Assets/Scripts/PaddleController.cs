@@ -26,7 +26,7 @@ public class PaddleController : MonoBehaviour
 
     public void UpdatePosition(float yPos)
     {
-        paddle.position = new Vector2(0, yPos);
+        paddle.position = new Vector2(gameObject.transform.position.x, yPos);
     }
 
     // Initialize caches.

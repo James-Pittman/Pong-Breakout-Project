@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,21 +7,59 @@ public class BlockController : MonoBehaviour
 {
     private int health;
 
+    private int id;
+
     [HideInInspector]
     public bool powerFlag = false;
 
     private GameCoordinator coordinator;
 
-    public void ActivateBlock()
+    public void ActivateBlock(int blockNum)
     {
-        powerFlag = (Random.value < coordinator.powerUpRandomVal) ? true : false;
-
-        health = Random.Range(1, 5);
+        if (blockNum != -1)
+            id = blockNum;
 
         gameObject.SetActive(true);
 
+        if (!coordinator.serverFlag)
+            return;
+
+        powerFlag = (UnityEngine.Random.value < coordinator.powerUpRandomVal) ? true : false;
+        health = UnityEngine.Random.Range(1, 5);
         UpdateStarVisibility();
         UpdateColor();
+
+        NetworkCoordinator.instance.WriteMessage(new byte[4] { (byte)1, (byte)id, Convert.ToByte(powerFlag), (byte)health });
+    }
+
+    // Updates the block based on server data received.
+    public void UpdateBlock(bool flag, int healthUpdate, int ballID)
+    {
+        powerFlag = flag;
+        health = healthUpdate;
+        UpdateStarVisibility();
+        UpdateColor();
+
+        if (health <= 0)
+        {
+            if (powerFlag)
+            {
+                coordinator.SelectPowerUp(GameCoordinator.instance.activeBalls[ballID]);
+
+
+                ScoreKeeper keeper = GameCoordinator.instance.GetScoreKeeper(GameCoordinator.instance.activeBalls[ballID].GetComponent<BallController>().ownerID);
+                // Add points for getting a power-up.
+                if (keeper != null)
+                {
+                    keeper.AddPowerUpPoints();
+                }
+            }
+
+            coordinator.activeBlocks.Remove(gameObject);
+            coordinator.inactiveBlocks.Add(gameObject);
+            gameObject.SetActive(false);
+        }
+
     }
 
     // Start is called before the first frame update
@@ -58,8 +97,9 @@ public class BlockController : MonoBehaviour
             // Add points for hitting a block.
             keeper.AddBlockPoints(blocksDestroyed);
         }
-
         UpdateColor();
+
+        NetworkCoordinator.instance.WriteMessage(new byte[5] { (byte)1, (byte)id, Convert.ToByte(powerFlag), (byte)health, (byte)ball.ballID });
 
         if (health <= 0)
         {

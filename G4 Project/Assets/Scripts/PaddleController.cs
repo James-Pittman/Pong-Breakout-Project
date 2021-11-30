@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,9 @@ public class PaddleController : MonoBehaviour
 {
     // Caches for gameObjects/Components
     private Rigidbody2D paddle;
+
+    // Bool to track if the paddle has moved since last update.
+    private bool movement;
 
     // Debug toggle to control movement options.
     [HideInInspector]
@@ -18,6 +22,11 @@ public class PaddleController : MonoBehaviour
     public int GetOwnerID()
     {
         return ownerID;
+    }
+
+    public void UpdatePosition(float yPos)
+    {
+        paddle.position = new Vector2(gameObject.transform.position.x, yPos);
     }
 
     // Initialize caches.
@@ -56,6 +65,10 @@ public class PaddleController : MonoBehaviour
     // Touch movement for Android
     private void TouchMovement()
     {
+        // Make sure you can't move the other players paddle.
+        if (ownerID != Convert.ToInt32(!GameCoordinator.instance.serverFlag))
+            return;
+
         foreach (Touch touch in Input.touches)
         {
             Vector3 touchPos = Camera.main.ScreenToWorldPoint(touch.position);
@@ -67,5 +80,28 @@ public class PaddleController : MonoBehaviour
                 paddle.position = myPosition;
             }
         }
+
+        SendUpdate(ownerID);
+    }
+
+    private void SendUpdate(int owner)
+    {
+        byte[] update = new byte[6];
+        byte[] yPos = new byte[4];
+        yPos = BitConverter.GetBytes(gameObject.transform.position.y);
+
+        update[0] = (byte)3;
+
+        if (owner == 0)
+            update[1] = (byte)1;
+        else
+            update[1] = (byte)0;
+
+        update[2] = yPos[0];
+        update[3] = yPos[1];
+        update[4] = yPos[2];
+        update[5] = yPos[3];
+
+        NetworkCoordinator.instance.WriteMessage(update);
     }
 }

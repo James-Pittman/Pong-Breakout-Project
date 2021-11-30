@@ -10,6 +10,10 @@ public class MenuCoordinator : MonoBehaviour
 
     private int difficulty = 0;
 
+    private bool waitFlag = false;
+
+    private float waitTime = 5.0f;
+
     public GameObject title;
     public GameObject leaderboard;
     public GameObject playMenu;
@@ -35,6 +39,18 @@ public class MenuCoordinator : MonoBehaviour
         BluetoothForAndroid.Initialize();
     }
 
+    private void Update()
+    {
+        if (waitFlag)
+        {
+            waitTime -= Time.deltaTime;
+        }
+        if (waitTime <= 0)
+        {
+            SceneManager.LoadScene("main");
+        }
+    }
+
     public void ChangeDifficulty()
     {
         if (difficulty == 0)
@@ -46,7 +62,8 @@ public class MenuCoordinator : MonoBehaviour
     private void StartGame()
     {
         ImportantData.powerupFreq = difficulty;
-        SceneManager.LoadScene("main");
+        waitFlag = true;
+        waitTime = 5.0f;
     }
 
     public void MainMenu()

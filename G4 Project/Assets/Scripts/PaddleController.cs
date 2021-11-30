@@ -69,7 +69,6 @@ public class PaddleController : MonoBehaviour
         if (ownerID != Convert.ToInt32(!GameCoordinator.instance.serverFlag))
             return;
 
-        //movement = true;
         foreach (Touch touch in Input.touches)
         {
             Vector3 touchPos = Camera.main.ScreenToWorldPoint(touch.position);

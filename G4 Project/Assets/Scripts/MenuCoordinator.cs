@@ -51,6 +51,7 @@ public class MenuCoordinator : MonoBehaviour
 
     public void MainMenu()
     {
+        NetworkCoordinator.instance.Disconnect();
         SceneManager.LoadScene("Title");
     }
 

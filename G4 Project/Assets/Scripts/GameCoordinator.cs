@@ -113,7 +113,6 @@ public class GameCoordinator : MonoBehaviour
             leaderboard.SaveRecords();
         }
 
-        NetworkCoordinator.instance.Disconnect();
         SceneManager.LoadScene("Win");
     }
 

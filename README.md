@@ -1,4 +1,5 @@
-# G4-Ping-Pong
-This is Group 4's Project for COP4331 with Turgut.
+# Multiplayer Pong/Breakout Project
 
-This repo includes two versions of the game: A version that includes Bluetooth functionality and a version that does not, so that you can test it for yourself without a second device. The version without Bluetooth can be played locally on the same screen. Both versions include all project requirements.
+This project is an Android mobile game that combines the popular games Pong and Atari Breakout into a competitive multiplayer game. The game supports local peer-to-peer bluetooth functionality between android devices, and includes a local leaderboard as well as a variety of game features such as difficulty, power-ups, and more.
+
+This project was originally a group project for my Processes for Object-Oriented Software Development class in Fall 2021, and this repo exists as a fork of the final version of the project that was worked on collaboratively. The original version of this project and it's co-authors can be found there.
